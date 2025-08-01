@@ -3,7 +3,7 @@ import IconMail from '@/components/icon/icon-mail';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 
-const ComponentsAuthResetPasswordForm = () => {
+const ComponentResetPasswordForm = () => {
     const router = useRouter();
 
     const submitForm = (e: any) => {
@@ -30,4 +30,4 @@ const ComponentsAuthResetPasswordForm = () => {
     );
 };
 
-export default ComponentsAuthResetPasswordForm;
+export default ComponentResetPasswordForm;
