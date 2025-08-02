@@ -1,12 +1,13 @@
 'use client';
 import { useRouter } from 'next/navigation';
 import React, { useRef } from 'react';
+import Link from 'next/link';
 
 const ComponentOTPForm = () => {
     const router = useRouter();
 
     // Fix: Initialize the array with 5 nulls
-    const inputsRef = useRef<(HTMLInputElement | null)[]>(new Array(5).fill(null));
+    const inputsRef = useRef<(HTMLInputElement | null)[]>(new Array(6).fill(null));
 
     const submitForm = (e: React.FormEvent) => {
         e.preventDefault();
@@ -58,12 +59,11 @@ const ComponentOTPForm = () => {
                     ))}
                 </div>
             </div>
-            <button
-                type="submit"
-                className="btn btn-gradient !mt-12 w-full border-0 uppercase shadow-[0_10px_20px_-10px_rgba(67,97,238,0.44)]"
-            >
-                VERIFY
-            </button>
+            <Link href="/auth/set-password">
+                <button type="submit" className="btn btn-gradient !mt-6 w-full border-0 uppercase shadow-[0_10px_20px_-10px_rgba(67,97,238,0.44)]">
+                    VERIFY
+                </button>
+            </Link>
         </form>
     );
 };

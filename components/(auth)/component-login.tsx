@@ -1,17 +1,23 @@
 'use client';
 import IconLockDots from '@/components/icon/icon-lock-dots';
-// import IconProfile from '@/components/icon/icon-profile'; // <- replace with your actual profile icon component
-import IconEye from '@/components/icon/icon-eye'; // <- replace with your actual eye icon component
+import IconEye from '@/components/icon/icon-eye';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 
 const ComponentLogin = () => {
     const router = useRouter();
     const [showPassword, setShowPassword] = useState(false);
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
 
-    const submitForm = (e: any) => {
+    const submitForm = (e: React.FormEvent) => {
         e.preventDefault();
-        router.push('/');
+
+        if (password === '12345') {
+            router.push('/auth/first-time-login');
+        } else {
+            router.push('/');
+        }
     };
 
     return (
@@ -24,12 +30,12 @@ const ComponentLogin = () => {
                         type="text"
                         placeholder="Enter username / mobile number"
                         className="form-input ps-10 placeholder:text-white-dark"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
                     />
-                    <span className="absolute start-4 top-1/2 -translate-y-1/2">
-                        {/* <IconProfile fill={true} /> */}
-                    </span>
                 </div>
             </div>
+
             <div>
                 <label htmlFor="Password">Password</label>
                 <div className="relative text-white-dark">
@@ -38,6 +44,8 @@ const ComponentLogin = () => {
                         type={showPassword ? 'text' : 'password'}
                         placeholder="Enter Password"
                         className="form-input ps-10 pe-10 placeholder:text-white-dark"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
                     />
                     <span className="absolute start-4 top-1/2 -translate-y-1/2">
                         <IconLockDots fill={true} />
@@ -52,12 +60,14 @@ const ComponentLogin = () => {
                     </button>
                 </div>
             </div>
+
             <div>
                 <label className="flex cursor-pointer items-center">
                     <input type="checkbox" className="form-checkbox bg-white dark:bg-black" />
                     <span className="text-white-dark">Remember me</span>
                 </label>
             </div>
+
             <button type="submit" className="btn btn-gradient !mt-6 w-full border-0 uppercase shadow-[0_10px_20px_-10px_rgba(67,97,238,0.44)]">
                 Sign in
             </button>
