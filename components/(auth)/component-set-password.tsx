@@ -5,8 +5,6 @@ import IconLockDots from '@/components/icon/icon-lock-dots';
 import IconEye from '@/components/icon/icon-eye';
 import Link from 'next/link';
 
-
-
 const ComponentSetPasswordForm = () => {
     const router = useRouter();
     const [showPassword, setShowPassword] = useState(false);
@@ -15,7 +13,7 @@ const ComponentSetPasswordForm = () => {
     const submitForm = (e: React.FormEvent) => {
         e.preventDefault();
         // handle password submission here
-        router.push('/login'); // redirect to login or dashboard
+        router.push('/login');
     };
 
     return (
@@ -34,7 +32,11 @@ const ComponentSetPasswordForm = () => {
                     </span>
                     <button
                         type="button"
-                        onClick={() => setShowPassword((prev) => !prev)}
+                        onMouseDown={() => setShowPassword(true)}
+                        onMouseUp={() => setShowPassword(false)}
+                        onMouseLeave={() => setShowPassword(false)}
+                        onTouchStart={() => setShowPassword(true)}
+                        onTouchEnd={() => setShowPassword(false)}
                         className="absolute end-4 top-1/2 -translate-y-1/2"
                         tabIndex={-1}
                     >
@@ -57,7 +59,11 @@ const ComponentSetPasswordForm = () => {
                     </span>
                     <button
                         type="button"
-                        onClick={() => setShowConfirm((prev) => !prev)}
+                        onMouseDown={() => setShowConfirm(true)}
+                        onMouseUp={() => setShowConfirm(false)}
+                        onMouseLeave={() => setShowConfirm(false)}
+                        onTouchStart={() => setShowConfirm(true)}
+                        onTouchEnd={() => setShowConfirm(false)}
                         className="absolute end-4 top-1/2 -translate-y-1/2"
                         tabIndex={-1}
                     >
@@ -67,12 +73,12 @@ const ComponentSetPasswordForm = () => {
             </div>
 
             <Link href="/auth/login">
-            <button
-                type="submit"
-                className="btn btn-gradient !mt-12 w-full border-0 uppercase shadow-[0_10px_20px_-10px_rgba(67,97,238,0.44)]"
-            >
-                SET PASSWORD
-            </button>
+                <button
+                    type="submit"
+                    className="btn btn-gradient !mt-12 w-full border-0 uppercase shadow-[0_10px_20px_-10px_rgba(67,97,238,0.44)]"
+                >
+                    SET PASSWORD
+                </button>
             </Link>
         </form>
     );

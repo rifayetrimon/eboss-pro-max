@@ -52,7 +52,11 @@ const ComponentLogin = () => {
                     </span>
                     <button
                         type="button"
-                        onClick={() => setShowPassword((prev) => !prev)}
+                        onMouseDown={() => setShowPassword(true)}
+                        onMouseUp={() => setShowPassword(false)}
+                        onMouseLeave={() => setShowPassword(false)}
+                        onTouchStart={() => setShowPassword(true)}
+                        onTouchEnd={() => setShowPassword(false)}
                         className="absolute end-4 top-1/2 -translate-y-1/2"
                         tabIndex={-1}
                     >
@@ -68,7 +72,10 @@ const ComponentLogin = () => {
                 </label>
             </div>
 
-            <button type="submit" className="btn btn-gradient !mt-6 w-full border-0 uppercase shadow-[0_10px_20px_-10px_rgba(67,97,238,0.44)]">
+            <button
+                type="submit"
+                className="btn btn-gradient !mt-6 w-full border-0 uppercase shadow-[0_10px_20px_-10px_rgba(67,97,238,0.44)]"
+            >
                 Sign in
             </button>
         </form>
