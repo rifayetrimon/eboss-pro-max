@@ -797,9 +797,13 @@ const Header = () => {
                                     </div>
                                 </button>
                                 <ul className="absolute top-0 z-[10] hidden min-w-[180px] rounded bg-white p-0 py-2 text-dark shadow ltr:left-[95%] rtl:right-[95%] dark:bg-[#1b2e4b] dark:text-white-dark">
-                                    <li>
-                                        <Link href="/users/profile">{t('profile')}</Link>
-                                    </li>
+                                <li>
+                                <Link href="/users/profile" className="dark:hover:text-white">
+                                    <IconUser className="h-4.5 w-4.5 shrink-0 ltr:mr-2 rtl:ml-2" />
+                                    Profile
+                                </Link>
+                                </li>
+
                                     <li>
                                         <Link href="/users/user-account-settings">{t('account_settings')}</Link>
                                     </li>
