@@ -1,8 +1,10 @@
 'use client';
-import IconLockDots from '@/components/icon/icon-lock-dots';
-import IconEye from '@/components/icon/icon-eye';
+
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
+import { FaUser } from 'react-icons/fa';
+import IconLockDots from '@/components/icon/icon-lock-dots';
+import IconEye from '@/components/icon/icon-eye';
 
 const ComponentLogin = () => {
     const router = useRouter();
@@ -22,6 +24,7 @@ const ComponentLogin = () => {
 
     return (
         <form className="space-y-5 dark:text-white" onSubmit={submitForm}>
+            {/* Username Field with Icon */}
             <div>
                 <label htmlFor="Username">Username</label>
                 <div className="relative text-white-dark">
@@ -33,9 +36,13 @@ const ComponentLogin = () => {
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                     />
+                    <span className="absolute start-4 top-1/2 -translate-y-1/2 text-white-dark">
+                        <FaUser />
+                    </span>
                 </div>
             </div>
 
+            {/* Password Field with Lock and Eye Icon */}
             <div>
                 <label htmlFor="Password">Password</label>
                 <div className="relative text-white-dark">
@@ -65,13 +72,15 @@ const ComponentLogin = () => {
                 </div>
             </div>
 
+            {/* Remember Me Checkbox */}
             <div>
                 <label className="flex cursor-pointer items-center">
                     <input type="checkbox" className="form-checkbox bg-white dark:bg-black" />
-                    <span className="text-white-dark">Remember me</span>
+                    <span className="text-white-dark ml-2">Remember me</span>
                 </label>
             </div>
 
+            {/* Submit Button */}
             <button
                 type="submit"
                 className="btn btn-gradient !mt-6 w-full border-0 uppercase shadow-[0_10px_20px_-10px_rgba(67,97,238,0.44)]"
