@@ -2,7 +2,7 @@ import axios from 'axios';
 
 
 const myAxios = axios.create({
-    baseURL: "http://localhost:8000/api",
+    baseURL: "https://devapi01.awfatech.com/",
     headers: {
         'Content-Type': 'application/json',
     },
