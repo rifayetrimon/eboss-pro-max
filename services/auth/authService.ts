@@ -1,7 +1,7 @@
 import myAxios from '@/lib/myAxios';
 
 export const loginUserWithAppcode = async (appCode: string) => {
-  const response = await myAxios.post('api/v2/auth/appcode', { app_code: appCode });
+  const response = await myAxios.post('api/v2/auth/appcode', { appcode: appCode });
   localStorage.setItem('appToken', response.data.token); // Save token from AppCode
   return response.data;
 };
