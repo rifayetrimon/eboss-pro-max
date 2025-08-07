@@ -1,4 +1,4 @@
-import AppCodeGuard from "@/components/(auth)/AppcodeGurad";
+import AppCodeGuard from "@/components/guards/AppcodeGurad";
 import ComponentResetPasswordForm from "@/components/(auth)/component-reset-password-form";
 import LanguageDropdown from "@/components/language-dropdown";
 

@@ -1,5 +1,5 @@
 'use client';
-import AppCodeGuard from "@/components/(auth)/AppcodeGurad";
+import AppCodeGuard from "@/components/guards/AppcodeGurad";
 import ComponentOTPForm from "@/components/(auth)/component-otp-form";
 import LanguageDropdown from "@/components/language-dropdown";
 

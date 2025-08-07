@@ -1,6 +1,6 @@
 'use client';
 
-import AppCodeGuard from "@/components/(auth)/AppcodeGurad";
+import AppCodeGuard from "@/components/guards/AppcodeGurad";
 import LanguageDropdown from "@/components/language-dropdown";
 import { useRouter } from "next/navigation";
 
