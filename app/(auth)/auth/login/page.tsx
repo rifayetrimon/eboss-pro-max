@@ -55,18 +55,8 @@ const Login = () => {
                             <div className="mx-auto w-full max-w-[440px]">
                                 {/* ✅ Alerts */}
                                 <div className="min-h-[56px] mb-5 space-y-2">
-                                    <Alert
-                                        type="success"
-                                        message="Password has been set successfully."
-                                        show={showSuccess}
-                                        onClose={() => setShowSuccess(false)}
-                                    />
-                                    <Alert
-                                        type="danger"
-                                        message={errorMessage}
-                                        show={!!errorMessage}
-                                        onClose={() => setErrorMessage('')}
-                                    />
+                                    <Alert type="success" message="Password has been set successfully." show={showSuccess} onClose={() => setShowSuccess(false)} />
+                                    <Alert type="danger" message={errorMessage} show={!!errorMessage} onClose={() => setErrorMessage('')} />
                                 </div>
 
                                 <div className="mb-10">
@@ -83,7 +73,7 @@ const Login = () => {
                                 </div>
 
                                 <div className="relative my-7 text-center md:mb-9">
-                                    <span className="absolute inset-x-0 top-1/2 h-px w-full -translate-y-1/2 bg-white-light dark:bg-white-dark"></span>
+                                    <span className="absolute inset-x-0 top-1/2 h-px w-full -translate-y-1/2 bg-[#d1d5db] dark:bg-[#4b5563]"></span>
                                     <span className="relative bg-white px-2 font-bold uppercase text-white-dark dark:bg-dark dark:text-white-light">or</span>
                                 </div>
 
