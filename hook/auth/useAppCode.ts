@@ -13,3 +13,12 @@ export const useAppCode = () => {
     },
   });
 };
+
+// import { useMutation } from '@tanstack/react-query';
+// import { loginUserWithAppcode } from '@/services/auth/authService';
+
+// export const useAppCode = () => {
+//     return useMutation({
+//         mutationFn: loginUserWithAppcode,
+//     });
+// };

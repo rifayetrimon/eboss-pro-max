@@ -1,4 +1,5 @@
 import myAxios from '@/lib/myAxios';
+import { getUserProfile } from '@/services/user/userService';
 
 // 🔐 Step 1: Get the encrypted app token
 export const loginUserWithAppcode = async (appCode: string) => {
@@ -6,8 +7,8 @@ export const loginUserWithAppcode = async (appCode: string) => {
 
     const token = response.data?.data?.encrypted_key;
     if (token) {
-        localStorage.setItem('appToken', token); // Used in URL
-        localStorage.setItem('x-encrypted-key', token); // Used in headers
+        // Save only once
+        localStorage.setItem('x-encrypted-key', token);
     }
 
     return response.data;
@@ -26,7 +27,7 @@ export const loginUser = async (
     const encryptedKey = localStorage.getItem('x-encrypted-key');
     if (!encryptedKey) throw new Error('Encrypted key missing');
 
-    const url = '/api/v2/auth/eboss/staff/login'; // Static value
+    const url = `api/v2/auth/eboss/staff/login`;
 
     const response = await myAxios.post(
         url,
@@ -48,3 +49,12 @@ export const loginUser = async (
 
     return response.data;
 };
+
+// Save user_id to localStorage for profile API
+// const userId = response.data?.data?.user_id;
+// if (!userId) throw new Error('User ID missing in login response');
+// localStorage.setItem('user_id', userId);
+
+// // Now call profile API
+// const profileData = await getUserProfile();
+// console.log('Fetched profile after login:', profileData);
