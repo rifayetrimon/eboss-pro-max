@@ -1,3 +1,14 @@
+// next.config.js
+const isProd = process.env.NODE_ENV === 'production';
+
+module.exports = {
+    reactStrictMode: true,
+    basePath: isProd ? '/eboss-pro-max' : '',
+    env: {
+        NEXT_PUBLIC_BASE_URL: isProd ? 'https://devphp01.awfatech.com' : 'http://localhost:3000',
+    },
+};
+
 // /** @type {import('next').NextConfig} */
 // const nextConfig = {
 //     reactStrictMode: true,
@@ -10,14 +21,3 @@
 // };
 
 // module.exports = nextConfig;
-
-// next.config.js
-const isProd = process.env.NODE_ENV === 'production';
-
-module.exports = {
-    reactStrictMode: true,
-    env: {
-        // Change only this if your domain changes
-        NEXT_PUBLIC_BASE_URL: isProd ? 'https://devphp01.awfatech.com/eboss-pro-max' : 'http://localhost:3000',
-    },
-};
