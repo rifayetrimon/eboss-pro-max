@@ -6,6 +6,7 @@ const nextConfig = {
     reactStrictMode: true,
     basePath: isProd ? '/eboss-pro-max' : '',
     trailingSlash: true,
+    output: 'standalone',
     images: {
         unoptimized: true, // Keep this for static export
     },
