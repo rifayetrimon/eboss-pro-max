@@ -10,5 +10,5 @@ export const assetPath = (path: string) => {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
     const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
 
-    return `${baseUrl}${basePath}${path}`;
+    return `${baseUrl}${basePath}`;
 };
