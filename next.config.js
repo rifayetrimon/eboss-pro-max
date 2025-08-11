@@ -22,8 +22,8 @@ const nextConfig = {
         ignoreDuringBuilds: true,
     },
     output: 'standalone',
-    // basePath: '/eboss-pro-max',
-    // assetPrefix: '/eboss-pro-max/',
+    basePath: '/eboss-pro-max',
+    assetPrefix: '/eboss-pro-max/',
 };
 
 module.exports = nextConfig;
