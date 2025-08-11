@@ -1,8 +1,8 @@
 'use client';
 
-import AppCodeGuard from "@/components/guards/AppcodeGurad";
-import LanguageDropdown from "@/components/language-dropdown";
-import { useRouter } from "next/navigation";
+import AppCodeGuard from '@/components/guards/AppcodeGurad';
+import LanguageDropdown from '@/components/language-dropdown';
+import { useRouter } from 'next/navigation';
 
 const ForgetPassword = () => {
     const router = useRouter();
@@ -19,7 +19,7 @@ const ForgetPassword = () => {
                 </div>
 
                 <div className="relative flex min-h-screen items-center justify-center bg-[url(/assets/images/auth/map.png)] bg-cover bg-center bg-no-repeat px-6 py-10 dark:bg-[#060818] sm:px-16">
-                    <img src="/assets/images/auth/coming-soon-object1.png" alt="image" className="absolute left-0 top-1/2 h-full max-h-[893px] -translate-y-1/2" />
+                    <img src="../../../../public/assets/images/auth-cover.svg" alt="image" className="absolute left-0 top-1/2 h-full max-h-[893px] -translate-y-1/2" />
                     <img src="/assets/images/auth/coming-soon-object2.png" alt="image" className="absolute left-24 top-0 h-40 md:left-[30%]" />
                     <img src="/assets/images/auth/coming-soon-object3.png" alt="image" className="absolute right-0 top-0 h-[300px]" />
                     <img src="/assets/images/auth/polygon-object.svg" alt="image" className="absolute bottom-0 end-[28%]" />
@@ -36,17 +36,11 @@ const ForgetPassword = () => {
                                 </div>
 
                                 <div className="space-y-5">
-                                    <button
-                                        onClick={() => firstTimeLogin('sms')}
-                                        className="btn btn-gradient w-full border-0 uppercase shadow-[0_10px_20px_-10px_rgba(67,97,238,0.44)]"
-                                    >
+                                    <button onClick={() => firstTimeLogin('sms')} className="btn btn-gradient w-full border-0 uppercase shadow-[0_10px_20px_-10px_rgba(67,97,238,0.44)]">
                                         Request SMS OTP
                                     </button>
 
-                                    <button
-                                        onClick={() => firstTimeLogin('email')}
-                                        className="btn btn-gradient w-full border-0 uppercase shadow-[0_10px_20px_-10px_rgba(67,97,238,0.44)]"
-                                    >
+                                    <button onClick={() => firstTimeLogin('email')} className="btn btn-gradient w-full border-0 uppercase shadow-[0_10px_20px_-10px_rgba(67,97,238,0.44)]">
                                         Request Email OTP
                                     </button>
                                 </div>
