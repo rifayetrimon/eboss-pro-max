@@ -1,9 +1,5 @@
 export const assetPath = (path: string) => {
-    const base = process.env.NEXT_PUBLIC_BASE_URL || '';
-
-    // Handle double slashes
-    const normalizedBase = base.endsWith('/') ? base.slice(0, -1) : base;
-    const normalizedPath = path.startsWith('/') ? path : `/${path}`;
-
-    return `${normalizedBase}${normalizedPath}`;
+    // In production, NEXT_PUBLIC_BASE_URL already includes basePath
+    // In development, it's just http://localhost:3000
+    return process.env.NEXT_PUBLIC_BASE_URL ? new URL(path, process.env.NEXT_PUBLIC_BASE_URL).href : path;
 };
