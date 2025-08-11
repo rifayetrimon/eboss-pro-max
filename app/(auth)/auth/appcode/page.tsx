@@ -3,6 +3,7 @@
 import ComponentAppCodeForm from '@/components/(auth)/component-appcode';
 import LanguageDropdown from '@/components/language-dropdown';
 import Alert from '@/components/ui/alert';
+import { assetPath } from '@/utails/url';
 import Image from 'next/image';
 import { useState } from 'react';
 
@@ -23,7 +24,7 @@ const AppCodePage = () => {
     return (
         <div>
             <div className="absolute inset-0">
-                <Image src="/assets/images/auth/coming-soon-object3.png" alt="image" className="h-full w-full object-cover" />
+                <Image src={assetPath('/assets/images/auth/coming-soon-object3.png')} alt="image" className="h-full w-full object-cover" />
             </div>
 
             <div className="relative flex min-h-screen items-center justify-center bg-[url(/assets/images/auth/map.png)] bg-cover bg-center bg-no-repeat px-6 py-10 dark:bg-[#060818] sm:px-16">

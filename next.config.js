@@ -5,17 +5,17 @@ const isProd = process.env.NODE_ENV === 'production';
 const nextConfig = {
     reactStrictMode: true,
     basePath: isProd ? '/eboss-pro-max' : '',
-    assetPrefix: isProd ? '/eboss-pro-max' : '',
     trailingSlash: true,
     images: {
-        unoptimized: isProd, // Add this if you're doing static export
+        unoptimized: true, // Keep this for static export
     },
     env: {
-        NEXT_PUBLIC_BASE_URL: isProd ? 'https://devphp01.awfatech.com/eboss-pro-max' : 'http://localhost:3000',
+        NEXT_PUBLIC_BASE_URL: isProd ? 'https://devphp01.awfatech.com/eboss-pro-max' : '',
     },
 };
 
 module.exports = nextConfig;
+
 // /** @type {import('next').NextConfig} */
 // const nextConfig = {
 //     reactStrictMode: true,
