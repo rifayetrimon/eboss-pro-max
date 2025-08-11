@@ -1,21 +1,18 @@
 // next.config.js
 const isProd = process.env.NODE_ENV === 'production';
+const basePath = isProd ? '/eboss-pro-max' : '';
 
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-    reactStrictMode: true,
-    basePath: isProd ? '/eboss-pro-max' : '',
+module.exports = {
+    basePath,
     trailingSlash: true,
     output: 'standalone',
     images: {
-        unoptimized: true, // Keep this for static export
+        unoptimized: true,
     },
     env: {
-        NEXT_PUBLIC_BASE_URL: isProd ? 'https://devphp01.awfatech.com/eboss-pro-max' : '',
+        NEXT_PUBLIC_BASE_URL: isProd ? 'https://devphp01.awfatech.com' + basePath : 'http://localhost:3000' + basePath,
     },
 };
-
-module.exports = nextConfig;
 
 // /** @type {import('next').NextConfig} */
 // const nextConfig = {
