@@ -1,4 +1,9 @@
+// src/lib/assetPath.ts
+import getConfig from 'next/config';
+
+const { publicRuntimeConfig } = getConfig();
+
 export const assetPath = (path: string) => {
-    const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
+    const basePath = publicRuntimeConfig?.basePath || '';
     return `${basePath}${path}`;
 };

@@ -4,14 +4,17 @@ const basePath = isProd ? '/eboss-pro-max' : '';
 
 module.exports = {
     basePath,
+    publicRuntimeConfig: {
+        basePath,
+    },
     trailingSlash: true,
     output: 'standalone',
     eslint: { ignoreDuringBuilds: true },
     typescript: { ignoreBuildErrors: true },
     images: { unoptimized: true },
     env: {
-        NEXT_PUBLIC_BASE_PATH: basePath,
         NEXT_PUBLIC_BASE_URL: isProd ? 'https://devphp01.awfatech.com' : 'http://localhost:3000',
+        // You can remove NEXT_PUBLIC_BASE_PATH from here now
     },
 };
 
