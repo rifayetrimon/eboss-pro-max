@@ -11,14 +11,13 @@
 
 // module.exports = nextConfig;
 
-// // next.config.js
+// next.config.js
 const isProd = process.env.NODE_ENV === 'production';
 
 module.exports = {
     reactStrictMode: true,
     env: {
-        BASE_URL: isProd
-            ? 'https://devphp01.awfatech.com/eboss-pro-max' // Production domain
-            : 'http://localhost:3000', // Local dev
+        // Change only this if your domain changes
+        NEXT_PUBLIC_BASE_URL: isProd ? 'https://devphp01.awfatech.com/eboss-pro-max' : 'http://localhost:3000',
     },
 };

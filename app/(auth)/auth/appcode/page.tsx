@@ -20,7 +20,7 @@ const AppCodePage = () => {
     return (
         <div>
             <div className="absolute inset-0">
-                <img src={`${process.env.BASE_URL}/assets/images/auth/bg-gradient.png`} alt="image" className="h-full w-full object-cover" />
+                <img src={`${process.env.NEXT_PUBLIC_BASE_URL}/assets/images/auth/coming-soon-object3.png`} alt="image" className="h-full w-full object-cover" />
             </div>
 
             <div className="relative flex min-h-screen items-center justify-center bg-[url(/assets/images/auth/map.png)] bg-cover bg-center bg-no-repeat px-6 py-10 dark:bg-[#060818] sm:px-16">
