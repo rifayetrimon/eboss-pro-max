@@ -8,7 +8,8 @@ export const getUserProfile = async () => {
 
     const userId = localStorage.getItem('user_id');
     const encryptedKey = localStorage.getItem('x-encrypted-key');
-    const encryptedAppCode = localStorage.getItem('userToken');
+    const encryptedUser = localStorage.getItem('encrypted_user');
+    const userToken = localStorage.getItem('userToken');
 
     // console.log(userId);
     // console.log(encryptedKey);
@@ -24,8 +25,9 @@ export const getUserProfile = async () => {
         },
         {
             headers: {
+                Authorization: `Bearer ${userToken}`,
                 'x-encrypted-key': encryptedKey,
-                'x-encrypted-user': encryptedAppCode,
+                'x-encrypted-user': encryptedUser,
             },
         },
     );

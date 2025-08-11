@@ -47,14 +47,16 @@ export const loginUser = async (
         },
     );
 
+    const userId = response.data?.data?.user_id;
+    const encrypted_user = response.data?.data?.encrypted_user;
+    const token = response.data?.data?.token;
+    if (!userId) throw new Error('User ID missing in login response');
+    localStorage.setItem('user_id', userId);
+    localStorage.setItem('encrypted_user', encrypted_user || '');
+    localStorage.setItem('userToken', token || '');
+
+    const profileData = await getUserProfile();
+    console.log('Fetched profile after login:', profileData);
+
     return response.data;
 };
-
-// Save user_id to localStorage for profile API
-// const userId = response.data?.data?.user_id;
-// if (!userId) throw new Error('User ID missing in login response');
-// localStorage.setItem('user_id', userId);
-
-// // Now call profile API
-// const profileData = await getUserProfile();
-// console.log('Fetched profile after login:', profileData);
