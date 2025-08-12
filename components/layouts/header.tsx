@@ -34,6 +34,7 @@ import IconMenuMore from '@/components/icon/menu/icon-menu-more';
 import { usePathname, useRouter } from 'next/navigation';
 import { getTranslation } from '@/i18n';
 import { useProfile } from '@/hook/user/useProfile';
+import { basePath } from '@/lib/basePath';
 
 const Header = () => {
     const pathname = usePathname();
@@ -41,6 +42,8 @@ const Header = () => {
     const router = useRouter();
     const { t, i18n } = getTranslation();
     const { data } = useProfile();
+
+    console.log('Profile data:', data);
 
     useEffect(() => {
         const selector = document.querySelector('ul.horizontal-menu a[href="' + window.location.pathname + '"]');
@@ -153,7 +156,7 @@ const Header = () => {
                 <div className="relative flex w-full items-center bg-white px-5 py-2.5 dark:bg-black">
                     <div className="horizontal-logo flex items-center justify-between ltr:mr-2 rtl:ml-2 lg:hidden">
                         <Link href="/" className="main-logo flex shrink-0 items-center">
-                            <img className="inline w-8 ltr:-ml-1 rtl:-mr-1" src="/assets/images/logo.svg" alt="logo" />
+                            <img className="inline w-8 ltr:-ml-1 rtl:-mr-1" src={`${basePath}/assets/images/logo.svg`} alt="logo" />
                             <span className="hidden align-middle text-2xl  font-semibold  transition-all duration-300 ltr:ml-1.5 rtl:mr-1.5 dark:text-white-light md:inline">VRISTO</span>
                         </Link>
                         <button
@@ -254,7 +257,7 @@ const Header = () => {
                                 offset={[0, 8]}
                                 placement={`${isRtl ? 'bottom-start' : 'bottom-end'}`}
                                 btnClassName="block p-2 rounded-full bg-white-light/40 dark:bg-dark/40 hover:text-primary hover:bg-white-light/90 dark:hover:bg-dark/60"
-                                button={i18n.language && <img className="h-5 w-5 rounded-full object-cover" src={`/assets/images/flags/${i18n.language.toUpperCase()}.svg`} alt="flag" />}
+                                button={i18n.language && <img className="h-5 w-5 rounded-full object-cover" src={`${basePath}/assets/images/flags/${i18n.language.toUpperCase()}.svg`} alt="flag" />}
                             >
                                 <ul className="grid w-[280px] grid-cols-2 gap-2 !px-2 font-semibold text-dark dark:text-white-dark dark:text-white-light/90">
                                     {themeConfig.languageList.map((item: any) => {
@@ -268,7 +271,7 @@ const Header = () => {
                                                         setLocale(item.code);
                                                     }}
                                                 >
-                                                    <img src={`/assets/images/flags/${item.code.toUpperCase()}.svg`} alt="flag" className="h-5 w-5 rounded-full object-cover" />
+                                                    <img src={`${basePath}/assets/images/flags/${item.code.toUpperCase()}.svg`} alt="flag" className="h-5 w-5 rounded-full object-cover" />
                                                     <span className="ltr:ml-3 rtl:mr-3">{item.name}</span>
                                                 </button>
                                             </li>
@@ -362,7 +365,7 @@ const Header = () => {
                                                         <div className="group flex items-center px-4 py-2">
                                                             <div className="grid place-content-center rounded">
                                                                 <div className="relative h-12 w-12">
-                                                                    <img className="h-12 w-12 rounded-full object-cover" alt="profile" src={`/assets/images/${notification.profile}`} />
+                                                                    <img className="h-12 w-12 rounded-full object-cover" alt="profile" src={`${basePath}/assets/images/${notification.profile}`} />
                                                                     <span className="absolute bottom-0 right-[6px] block h-2 w-2 rounded-full bg-success"></span>
                                                                 </div>
                                                             </div>
@@ -414,7 +417,7 @@ const Header = () => {
                                 button={
                                     <img
                                         className="h-9 w-9 rounded-full object-cover saturate-50 group-hover:saturate-100"
-                                        src={data?.staff?.file_profile_url || '/assets/images/user-profile.jpeg'} // || '/default-avatar.png'
+                                        src={data?.file_profile_url || `${basePath}/assets/images/user-profile.jpeg`} // || '/default-avatar.png'
                                         alt="userProfile"
                                     />
                                 }
@@ -422,14 +425,14 @@ const Header = () => {
                                 <ul className="w-[230px] !py-0 font-semibold text-dark dark:text-white-dark dark:text-white-light/90">
                                     <li>
                                         <div className="flex items-center px-4 py-4">
-                                            <img className="h-10 w-10 rounded-md object-cover" src="/assets/images/user-profile.jpeg" alt="userProfile" />
+                                            <img className="h-10 w-10 rounded-md object-cover" src={`${basePath}/assets/images/user-profile.jpeg`} alt="userProfile" />
                                             <div className="truncate ltr:pl-4 rtl:pr-4">
                                                 <h4 className="text-base">
-                                                    {data?.staff?.name}
+                                                    {data?.name || 'Guest User'}
                                                     <span className="rounded bg-success-light px-1 text-xs text-success ltr:ml-2 rtl:ml-2">Pro</span>
                                                 </h4>
                                                 <button type="button" className="text-black/60 hover:text-primary dark:text-dark-light/60 dark:hover:text-white">
-                                                    johndoe@gmail.com
+                                                    {data?.email || 'No email available'}
                                                 </button>
                                             </div>
                                         </div>

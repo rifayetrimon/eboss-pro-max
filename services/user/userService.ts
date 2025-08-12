@@ -32,5 +32,8 @@ export const getUserProfile = async () => {
         },
     );
 
+    console.log('Full API response:', response.data); // ✅ Debug log
+    console.log('Returned profile data:', response.data.data);
+
     return response.data.data;
 };
