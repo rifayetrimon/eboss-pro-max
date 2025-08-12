@@ -1,3 +1,5 @@
+'use client';
+
 import IconCalendar from '@/components/icon/icon-calendar';
 import IconClock from '@/components/icon/icon-clock';
 import IconCoffee from '@/components/icon/icon-coffee';
@@ -12,15 +14,17 @@ import IconShoppingBag from '@/components/icon/icon-shopping-bag';
 import IconTag from '@/components/icon/icon-tag';
 import IconTwitter from '@/components/icon/icon-twitter';
 // import ComponentsUsersProfilePaymentHistory from '@/components/users/profile/components-users-profile-payment-history';
-import { Metadata } from 'next';
 import Link from 'next/link';
 import React from 'react';
+import { useProfile } from '@/hook/user/useProfile';
 
-export const metadata: Metadata = {
-    title: 'Profile',
-};
+// export const metadata: Metadata = {
+//     title: 'Profile',
+// };
 
 const Profile = () => {
+    const { data } = useProfile();
+
     return (
         <div>
             <ul className="flex space-x-2 rtl:space-x-reverse">
@@ -45,7 +49,7 @@ const Profile = () => {
                         <div className="mb-5">
                             <div className="flex flex-col items-center justify-center">
                                 <img src="/assets/images/profile-34.jpeg" alt="img" className="mb-5 h-24 w-24 rounded-full  object-cover" />
-                                <p className="text-xl font-semibold text-primary">Jimmy Turner</p>
+                                <p className="text-xl font-semibold text-primary">{data?.name}</p>
                             </div>
                             <ul className="m-auto mt-5 flex max-w-[160px] flex-col space-y-4 font-semibold text-white-dark">
                                 <li className="flex items-center gap-2">
@@ -53,22 +57,22 @@ const Profile = () => {
                                 </li>
                                 <li className="flex items-center gap-2">
                                     <IconCalendar className="shrink-0" />
-                                    Jan 20, 1989
+                                    {data?.birth_date || 'No data'}
                                 </li>
                                 <li className="flex items-center gap-2">
                                     <IconMapPin className="shrink-0" />
-                                    New York, USA
+                                    {data?.address.main.line1 || 'No data'}
                                 </li>
                                 <li>
                                     <button className="flex items-center gap-2">
                                         <IconMail className="h-5 w-5 shrink-0" />
-                                        <span className="truncate text-primary">jimmy@gmail.com</span>
+                                        <span className="truncate text-primary">{data?.email}</span>
                                     </button>
                                 </li>
                                 <li className="flex items-center gap-2">
                                     <IconPhone />
                                     <span className="whitespace-nowrap" dir="ltr">
-                                        +1 (530) 555-12121
+                                        {data?.phone || 'No phone number available'}
                                     </span>
                                 </li>
                             </ul>
