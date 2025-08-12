@@ -25,7 +25,7 @@ const ComponentLogin = ({ setErrorMessage }: { setErrorMessage: (msg: string) =>
 
             if (token) {
                 localStorage.setItem('userToken', token);
-                router.push('/');
+                router.push('/home');
             } else {
                 setErrorMessage('Invalid response from server');
             }
