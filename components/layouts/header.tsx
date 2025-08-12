@@ -43,8 +43,6 @@ const Header = () => {
     const { t, i18n } = getTranslation();
     const { data } = useProfile();
 
-    console.log('Profile data:', data);
-
     useEffect(() => {
         const selector = document.querySelector('ul.horizontal-menu a[href="' + window.location.pathname + '"]');
         if (selector) {

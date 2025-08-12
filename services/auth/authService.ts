@@ -55,8 +55,8 @@ export const loginUser = async (
     localStorage.setItem('encrypted_user', encrypted_user || '');
     localStorage.setItem('userToken', token || '');
 
-    const profileData = await getUserProfile();
-    console.log('Fetched profile after login:', profileData);
+    // const profileData = await getUserProfile();
+    // console.log('Fetched profile after login:', profileData);
 
     return response.data;
 };

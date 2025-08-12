@@ -17,6 +17,7 @@ import IconTwitter from '@/components/icon/icon-twitter';
 import Link from 'next/link';
 import React from 'react';
 import { useProfile } from '@/hook/user/useProfile';
+import { basePath } from '@/lib/basePath';
 
 // export const metadata: Metadata = {
 //     title: 'Profile',
@@ -48,7 +49,7 @@ const Profile = () => {
                         </div>
                         <div className="mb-5">
                             <div className="flex flex-col items-center justify-center">
-                                <img src="/assets/images/profile-34.jpeg" alt="img" className="mb-5 h-24 w-24 rounded-full  object-cover" />
+                                <img src={data?.file_profile_url || `${basePath}/assets/images/user-profile.jpeg`} alt="img" className="mb-5 h-24 w-24 rounded-full  object-cover" />
                                 <p className="text-xl font-semibold text-primary">{data?.name}</p>
                             </div>
                             <ul className="m-auto mt-5 flex max-w-[160px] flex-col space-y-4 font-semibold text-white-dark">

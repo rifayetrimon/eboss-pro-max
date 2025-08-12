@@ -14,7 +14,7 @@
 const isProd = process.env.NODE_ENV === 'production';
 
 module.exports = {
-    reactStrictMode: true,
+    reactStrictMode: false,
     eslint: { ignoreDuringBuilds: true },
     output: 'standalone',
     basePath: isProd ? '/eboss-pro-max' : '',
