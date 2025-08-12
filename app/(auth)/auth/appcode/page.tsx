@@ -22,7 +22,7 @@ const AppCodePage = () => {
         <div>
             {/* Fullscreen background image */}
             <div className="absolute inset-0">
-                <img src={`${basePath}/assets/images/auth/coming-soon-object3.png`} alt="image" className="object-cover" />
+                <img src={`${basePath}/assets/images/auth/bg-gradient.png`} alt="background" className="h-full w-full object-cover" />
             </div>
 
             <div
