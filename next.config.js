@@ -5,8 +5,8 @@ module.exports = {
     reactStrictMode: false,
     eslint: { ignoreDuringBuilds: true },
     output: 'standalone',
-    basePath: isProd ? '/eboss-pro-max/' : '',
-    assetPrefix: isProd ? '/eboss-pro-max/' : '',
+    basePath: isProd ? '/eboss-pro-max' : '',
+    assetPrefix: isProd ? '/eboss-pro-max' : '',
     publicRuntimeConfig: {
         basePath: isProd ? '/eboss-pro-max' : '',
     },
