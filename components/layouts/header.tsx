@@ -35,6 +35,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { getTranslation } from '@/i18n';
 import { useProfile } from '@/hook/user/useProfile';
 import { basePath } from '@/lib/basePath';
+import { useLogout } from '@/hook/auth/useLogout';
 
 const Header = () => {
     const pathname = usePathname();
@@ -42,6 +43,7 @@ const Header = () => {
     const router = useRouter();
     const { t, i18n } = getTranslation();
     const { data } = useProfile();
+    const logout = useLogout();
 
     useEffect(() => {
         const selector = document.querySelector('ul.horizontal-menu a[href="' + window.location.pathname + '"]');
@@ -453,11 +455,17 @@ const Header = () => {
                                             Lock Screen
                                         </Link>
                                     </li>
-                                    <li className="border-t border-white-light dark:border-white-light/10">
+                                    {/* <li className="border-t border-white-light dark:border-white-light/10">
                                         <Link href="/auth/boxed-signin" className="!py-3 text-danger">
                                             <IconLogout className="h-4.5 w-4.5 shrink-0 rotate-90 ltr:mr-2 rtl:ml-2" />
                                             Sign Out
                                         </Link>
+                                    </li> */}
+                                    <li className="border-t border-white-light dark:border-white-light/10">
+                                        <button onClick={logout} className="flex w-full items-center !py-3 text-danger">
+                                            <IconLogout className="h-4.5 w-4.5 shrink-0 rotate-90 ltr:mr-2 rtl:ml-2" />
+                                            Sign Out
+                                        </button>
                                     </li>
                                 </ul>
                             </Dropdown>
