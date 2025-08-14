@@ -4,8 +4,12 @@ import AppCodeGuard from '@/components/guards/AppcodeGurad';
 import ComponentSetPassword from '@/components/(auth)/component-set-password';
 import LanguageDropdown from '@/components/language-dropdown';
 import { basePath } from '@/lib/basePath';
+import { FaArrowLeftLong } from 'react-icons/fa6';
+import { useRouter } from 'next/navigation';
 
 const SetPasswordPage = () => {
+    const router = useRouter();
+
     return (
         <AppCodeGuard>
             <div>
@@ -24,6 +28,12 @@ const SetPasswordPage = () => {
 
                     <div className="relative w-full max-w-[870px] rounded-md bg-[linear-gradient(45deg,#fff9f9_0%,rgba(255,255,255,0)_25%,rgba(255,255,255,0)_75%,_#fff9f9_100%)] p-2 dark:bg-[linear-gradient(52.22deg,#0E1726_0%,rgba(14,23,38,0)_18.66%,rgba(14,23,38,0)_51.04%,rgba(14,23,38,0)_80.07%,#0E1726_100%)]">
                         <div className="relative flex flex-col justify-center rounded-md bg-white/60 px-6 py-20 backdrop-blur-lg dark:bg-black/50 lg:min-h-[758px]">
+                            <div className="absolute top-6 left-6 right-6 flex items-center justify-between">
+                                <button type="button" onClick={() => router.back()} className="text-white hover:text-gray-300">
+                                    <FaArrowLeftLong className="text-xl text-white-dark" />
+                                </button>
+                                <LanguageDropdown />
+                            </div>
                             <div className="absolute end-6 top-6">
                                 <LanguageDropdown />
                             </div>
