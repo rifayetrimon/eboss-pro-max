@@ -7,7 +7,6 @@ export const useLogin = () => {
             loginUser(username, password, options),
         onSuccess: (data) => {
             console.log('Login successful:', data);
-            // Redirect to dashboard or show user UI
         },
         onError: (error: any) => {
             console.error('Login failed:', error.response?.data || error.message);

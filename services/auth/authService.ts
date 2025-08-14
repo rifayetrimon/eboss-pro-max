@@ -59,22 +59,3 @@ export const loginUser = async (
 
     return response.data;
 };
-
-// // sign out
-// export const signOutUser = async () => {
-//     try {
-//         const encryptedKey = localStorage.getItem('x-encrypted-key');
-//         const userToken = localStorage.getItem('userToken');
-
-//         // Clear all localStorage items related to auth
-//         localStorage.removeItem('user_id');
-//         localStorage.removeItem('encrypted_user');
-//         localStorage.removeItem('userToken');
-
-//         // Optional: redirect to login page
-//         window.location.href = '/login';
-//     } catch (error) {
-//         console.error('Error signing out:', error);
-//         throw error;
-//     }
-// };

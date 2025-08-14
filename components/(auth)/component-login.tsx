@@ -1,39 +1,48 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { FaUser } from 'react-icons/fa';
 import IconLockDots from '@/components/icon/icon-lock-dots';
 import IconEye from '@/components/icon/icon-eye';
-import { loginUser } from '@/services/auth/authService';
+import { useLogin } from '@/hook/auth/useLogin';
 
 const ComponentLogin = ({ setErrorMessage }: { setErrorMessage: (msg: string) => void }) => {
     const router = useRouter();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
-    const [loading, setLoading] = useState(false);
+    const [rememberMe, setRememberMe] = useState(false);
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const { mutate: login, isPending } = useLogin();
+
+    // Load saved username on mount
+    useEffect(() => {
+        const savedUsername = localStorage.getItem('rememberedUsername');
+        if (savedUsername) {
+            setUsername(savedUsername);
+            setRememberMe(true);
+        }
+    }, []);
+
+    const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         setErrorMessage('');
-        setLoading(true);
 
-        try {
-            const res = await loginUser(username, password);
-            const token = res?.data?.token;
-
-            if (token) {
-                localStorage.setItem('userToken', token);
-                router.push('/');
-            } else {
-                setErrorMessage('Invalid response from server');
-            }
-        } catch (err: any) {
-            setErrorMessage(err?.message || 'Login failed');
-        } finally {
-            setLoading(false);
+        // Save username if Remember Me checked
+        if (rememberMe) {
+            localStorage.setItem('rememberedUsername', username);
+        } else {
+            localStorage.removeItem('rememberedUsername');
         }
+
+        login(
+            { username, password },
+            {
+                onSuccess: () => router.push('/'),
+                onError: (err: any) => setErrorMessage(err?.message || 'Login failed'),
+            },
+        );
     };
 
     return (
@@ -44,11 +53,13 @@ const ComponentLogin = ({ setErrorMessage }: { setErrorMessage: (msg: string) =>
                 <div className="relative text-white-dark">
                     <input
                         id="Username"
+                        name="username"
                         type="text"
                         placeholder="Enter username / mobile number"
                         className="form-input ps-10 placeholder:text-white-dark"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
+                        autoComplete="username" // Allow browser autofill
                         required
                     />
                     <span className="absolute start-4 top-1/2 -translate-y-1/2 text-white-dark">
@@ -63,11 +74,13 @@ const ComponentLogin = ({ setErrorMessage }: { setErrorMessage: (msg: string) =>
                 <div className="relative text-white-dark">
                     <input
                         id="Password"
+                        name="password"
                         type={showPassword ? 'text' : 'password'}
                         placeholder="Enter Password"
                         className="form-input ps-10 pe-10 placeholder:text-white-dark"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
+                        autoComplete="password" // Allow browser autofill
                         required
                     />
                     <span className="absolute start-4 top-1/2 -translate-y-1/2">
@@ -91,14 +104,14 @@ const ComponentLogin = ({ setErrorMessage }: { setErrorMessage: (msg: string) =>
             {/* Remember Me */}
             <div>
                 <label className="flex cursor-pointer items-center">
-                    <input type="checkbox" className="form-checkbox bg-white dark:bg-black" />
+                    <input type="checkbox" className="form-checkbox bg-white dark:bg-black" checked={rememberMe} onChange={(e) => setRememberMe(e.target.checked)} />
                     <span className="text-white-dark ml-2">Remember me</span>
                 </label>
             </div>
 
             {/* Submit Button */}
-            <button type="submit" className="btn btn-gradient !mt-6 w-full border-0 uppercase shadow-[0_10px_20px_-10px_rgba(67,97,238,0.44)]" disabled={loading}>
-                {loading ? 'Signing in...' : 'Sign in'}
+            <button type="submit" className="btn btn-gradient !mt-6 w-full border-0 uppercase shadow-[0_10px_20px_-10px_rgba(67,97,238,0.44)]" disabled={isPending}>
+                {isPending ? 'Signing in...' : 'Sign in'}
             </button>
         </form>
     );
