@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
+import Image from 'next/image';
 import { IRootState } from '@/store';
 import { toggleTheme, toggleSidebar, toggleRTL } from '@/store/themeConfigSlice';
 import Dropdown from '@/components/dropdown';
@@ -156,7 +157,8 @@ const Header = () => {
                 <div className="relative flex w-full items-center bg-white px-5 py-2.5 dark:bg-black">
                     <div className="horizontal-logo flex items-center justify-between ltr:mr-2 rtl:ml-2 lg:hidden">
                         <Link href="/" className="main-logo flex shrink-0 items-center">
-                            <img className="inline w-8 ltr:-ml-1 rtl:-mr-1" src={`${basePath}/assets/images/logo2.svg`} alt="logo" />
+                            <Image className="inline w-8 ltr:-ml-1 rtl:-mr-1" src={`${basePath}/assets/images/logo2.svg`} alt="logo" width={32} height={32} />
+                            {/* <img className="inline w-8 ltr:-ml-1 rtl:-mr-1" src={`${basePath}/assets/images/logo2.svg`} alt="logo" /> */}
                             <span className="hidden align-middle text-2xl  font-semibold  transition-all duration-300 ltr:ml-1.5 rtl:mr-1.5 dark:text-white-light md:inline">EBOSS</span>
                         </Link>
                         <button
@@ -257,7 +259,17 @@ const Header = () => {
                                 offset={[0, 8]}
                                 placement={`${isRtl ? 'bottom-start' : 'bottom-end'}`}
                                 btnClassName="block p-2 rounded-full bg-white-light/40 dark:bg-dark/40 hover:text-primary hover:bg-white-light/90 dark:hover:bg-dark/60"
-                                button={i18n.language && <img className="h-5 w-5 rounded-full object-cover" src={`${basePath}/assets/images/flags/${i18n.language.toUpperCase()}.svg`} alt="flag" />}
+                                button={
+                                    i18n.language && (
+                                        <Image
+                                            className="h-5 w-5 rounded-full object-cover"
+                                            src={`${basePath}/assets/images/flags/${i18n.language.toUpperCase()}.svg`}
+                                            alt="flag"
+                                            width={20}
+                                            height={20}
+                                        />
+                                    )
+                                }
                             >
                                 <ul className="grid w-[280px] grid-cols-2 gap-2 !px-2 font-semibold text-dark dark:text-white-dark dark:text-white-light/90">
                                     {themeConfig.languageList.map((item: any) => {
@@ -271,7 +283,14 @@ const Header = () => {
                                                         setLocale(item.code);
                                                     }}
                                                 >
-                                                    <img src={`${basePath}/assets/images/flags/${item.code.toUpperCase()}.svg`} alt="flag" className="h-5 w-5 rounded-full object-cover" />
+                                                    {/* <img src={`${basePath}/assets/images/flags/${item.code.toUpperCase()}.svg`} alt="flag" className="h-5 w-5 rounded-full object-cover" /> */}
+                                                    <Image
+                                                        src={`${basePath}/assets/images/flags/${item.code.toUpperCase()}.svg`}
+                                                        alt="flag"
+                                                        className="h-5 w-5 rounded-full object-cover"
+                                                        width={20}
+                                                        height={20}
+                                                    />
                                                     <span className="ltr:ml-3 rtl:mr-3">{item.name}</span>
                                                 </button>
                                             </li>
@@ -365,7 +384,14 @@ const Header = () => {
                                                         <div className="group flex items-center px-4 py-2">
                                                             <div className="grid place-content-center rounded">
                                                                 <div className="relative h-12 w-12">
-                                                                    <img className="h-12 w-12 rounded-full object-cover" alt="profile" src={`${basePath}/assets/images/${notification.profile}`} />
+                                                                    {/* <img className="h-12 w-12 rounded-full object-cover" alt="profile" src={`${basePath}/assets/images/${notification.profile}`} /> */}
+                                                                    <Image
+                                                                        className="h-12 w-12 rounded-full object-cover"
+                                                                        alt="profile"
+                                                                        src={`${basePath}/assets/images/${notification.profile}`}
+                                                                        width={48}
+                                                                        height={48}
+                                                                    />
                                                                     <span className="absolute bottom-0 right-[6px] block h-2 w-2 rounded-full bg-success"></span>
                                                                 </div>
                                                             </div>
@@ -415,17 +441,31 @@ const Header = () => {
                                 placement={`${isRtl ? 'bottom-start' : 'bottom-end'}`}
                                 btnClassName="relative group block"
                                 button={
-                                    <img
+                                    <Image
                                         className="h-9 w-9 rounded-full object-cover saturate-50 group-hover:saturate-100"
-                                        src={data?.file_profile_url || `${basePath}/assets/images/user-profile.jpeg`} // || '/default-avatar.png'
+                                        src={data?.file_profile_url || `${basePath}/assets/images/user-profile.jpeg`}
                                         alt="userProfile"
+                                        width={36}
+                                        height={36}
                                     />
+                                    // <img
+                                    //     className="h-9 w-9 rounded-full object-cover saturate-50 group-hover:saturate-100"
+                                    //     src={data?.file_profile_url || `${basePath}/assets/images/user-profile.jpeg`} // || '/default-avatar.png'
+                                    //     alt="userProfile"
+                                    // />
                                 }
                             >
                                 <ul className="w-[230px] !py-0 font-semibold text-dark dark:text-white-dark dark:text-white-light/90">
                                     <li>
                                         <div className="flex items-center px-4 py-4">
-                                            <img className="h-10 w-10 rounded-md object-cover" src={`${basePath}/assets/images/user-profile.jpeg`} alt="userProfile" />
+                                            {/* <img className="h-10 w-10 rounded-md object-cover" src={`${basePath}/assets/images/user-profile.jpeg`} alt="userProfile" /> */}
+                                            <Image
+                                                className="h-10 w-10 rounded-md object-cover"
+                                                src={data?.file_profile_url || `${basePath}/assets/images/user-profile.jpeg`}
+                                                alt="userProfile"
+                                                width={40}
+                                                height={40}
+                                            />
                                             <div className="truncate ltr:pl-4 rtl:pr-4">
                                                 <h4 className="text-base">
                                                     {data?.name || 'Guest User'}

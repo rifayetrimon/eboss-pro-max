@@ -31,6 +31,7 @@ import IconUser from '@/components/icon/icon-user';
 import IconUsersGroup from '@/components/icon/icon-users-group';
 import { IRootState } from '@/store';
 import Link from 'next/link';
+import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { useSelector } from 'react-redux';
@@ -1206,7 +1207,8 @@ const ComponentsWidgets = () => {
                                     <tr className="group text-white-dark hover:text-black dark:hover:text-white-light/90">
                                         <td className="min-w-[150px] text-black dark:text-white">
                                             <div className="flex items-center">
-                                                <img className="h-8 w-8 rounded-md object-cover ltr:mr-3 rtl:ml-3" src="/assets/images/profile-6.jpeg" alt="avatar" />
+                                                {/* <img className="h-8 w-8 rounded-md object-cover ltr:mr-3 rtl:ml-3" src="/assets/images/profile-6.jpeg" alt="avatar" /> */}
+                                                <Image className="h-8 w-8 rounded-md object-cover ltr:mr-3 rtl:ml-3" src="/assets/images/profile-6.jpeg" alt="avatar" width={32} height={32} />
                                                 <span className="whitespace-nowrap">Luke Ivory</span>
                                             </div>
                                         </td>
@@ -1222,7 +1224,8 @@ const ComponentsWidgets = () => {
                                     <tr className="group text-white-dark hover:text-black dark:hover:text-white-light/90">
                                         <td className="text-black dark:text-white">
                                             <div className="flex items-center">
-                                                <img className="h-8 w-8 rounded-md object-cover ltr:mr-3 rtl:ml-3" src="/assets/images/profile-7.jpeg" alt="avatar" />
+                                                {/* <img className="h-8 w-8 rounded-md object-cover ltr:mr-3 rtl:ml-3" src="/assets/images/profile-7.jpeg" alt="avatar" /> */}
+                                                <Image className="h-8 w-8 rounded-md object-cover ltr:mr-3 rtl:ml-3" src="/assets/images/profile-7.jpeg" alt="avatar" width={32} height={32} />
                                                 <span className="whitespace-nowrap">Andy King</span>
                                             </div>
                                         </td>
