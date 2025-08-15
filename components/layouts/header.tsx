@@ -443,7 +443,7 @@ const Header = () => {
                                 button={
                                     <Image
                                         className="h-9 w-9 rounded-full object-cover saturate-50 group-hover:saturate-100"
-                                        src={data?.file_profile_url || `${basePath}/assets/images/user-profile.jpeg`}
+                                        src={data?.personal.file_profile_url || `${basePath}/assets/images/user-profile.jpeg`}
                                         alt="userProfile"
                                         width={36}
                                         height={36}
@@ -461,7 +461,7 @@ const Header = () => {
                                             {/* <img className="h-10 w-10 rounded-md object-cover" src={`${basePath}/assets/images/user-profile.jpeg`} alt="userProfile" /> */}
                                             <Image
                                                 className="h-10 w-10 rounded-md object-cover"
-                                                src={data?.file_profile_url || `${basePath}/assets/images/user-profile.jpeg`}
+                                                src={data?.personal.file_profile_url || `${basePath}/assets/images/user-profile.jpeg`}
                                                 alt="userProfile"
                                                 width={40}
                                                 height={40}

@@ -10,4 +10,7 @@ module.exports = {
     publicRuntimeConfig: {
         basePath: isProd ? '/eboss-pro-max' : '',
     },
+    images: {
+        domains: ['devsec.awfatech.com'], // Add your API's domain here
+    },
 };
