@@ -56,7 +56,8 @@ const Profile = () => {
                             </div>
                             <ul className="m-auto mt-5 flex max-w-[160px] flex-col space-y-4 font-semibold text-white-dark">
                                 <li className="flex items-center gap-2">
-                                    <IconCoffee className="shrink-0" /> Web Developer
+                                    <IconCoffee className="shrink-0" />
+                                    {data?.job.designation || 'No data'}
                                 </li>
                                 <li className="flex items-center gap-2">
                                     <IconCalendar className="shrink-0" />

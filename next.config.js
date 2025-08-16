@@ -11,6 +11,6 @@ module.exports = {
         basePath: isProd ? '/eboss-pro-max' : '',
     },
     images: {
-        domains: ['master.d1owhjfq4wkbrq.amplifyapp.com'], // Add your API's domain here
+        domains: ['devsec.awfatech.com'], // Add your API's domain here
     },
 };
