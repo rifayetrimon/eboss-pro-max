@@ -37,6 +37,8 @@ import { getTranslation } from '@/i18n';
 import { useProfile } from '@/hook/user/useProfile';
 import { basePath } from '@/lib/basePath';
 import { useLogout } from '@/hook/auth/useLogout';
+import LanguageDropdown from '../language-dropdown';
+import IconAI from '../icon/icon-ai';
 
 const Header = () => {
     const pathname = usePathname();
@@ -216,6 +218,12 @@ const Header = () => {
                             >
                                 <IconSearch className="mx-auto h-4.5 w-4.5 dark:text-[#d0d2d6]" />
                             </button>
+                        </div>
+                        {/***************************  ai icon ****************************/}
+                        <div>
+                            <Link href="/apps/ai" className="block rounded-full bg-white-light/40 p-2 hover:bg-white-light/90 hover:text-primary dark:bg-dark/40 dark:hover:bg-dark/60">
+                                <IconAI />
+                            </Link>
                         </div>
                         <div>
                             {themeConfig.theme === 'light' ? (

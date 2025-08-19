@@ -41,7 +41,7 @@ const LanguageDropdown = ({ className = '' }: LanguageDropdownProps) => {
                     button={
                         <>
                             <div>
-                                <Image src={`${basePath}/assets/images/flags/${i18n.language.toUpperCase()}.svg`} alt="image" className="h-5 w-5 rounded-full object-cover" />
+                                <Image src={`${basePath}/assets/images/flags/${i18n.language.toUpperCase()}.svg`} alt="image" width={20} height={20} className="h-5 w-5 rounded-full object-cover" />
                             </div>
                             <div className="text-base font-bold uppercase">{i18n.language}</div>
                             <span className="shrink-0">
