@@ -4,7 +4,6 @@ import { useState, useRef, useEffect } from 'react';
 import { FiSend } from 'react-icons/fi';
 import { FaWhatsapp } from 'react-icons/fa';
 import { BiMessageDetail } from 'react-icons/bi';
-import { GoogleGenerativeAI } from '@google/generative-ai';
 
 const animatedBorderStyle = `
 .animated-border-button {
@@ -76,20 +75,17 @@ export default function ComponentsAppsAI() {
     const [isHelpMenuOpen, setIsHelpMenuOpen] = useState(false);
     const [inputValue, setInputValue] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const [conversation, setConversation] = useState([]);
+    const [conversation, setConversation] = useState<{ role: string; text: string }[]>([]);
 
-    const genAI = new GoogleGenerativeAI(process.env.NEXT_PUBLIC_GEMINI_API_KEY);
-    const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
-    const inputRef = useRef(null);
-    const chatContainerRef = useRef(null);
+    const inputRef = useRef<HTMLTextAreaElement | null>(null);
+    const chatContainerRef = useRef<HTMLDivElement | null>(null);
 
     const toggleHelpMenu = () => {
         setIsHelpMenuOpen(!isHelpMenuOpen);
     };
 
-    const handleSendMessage = async (e) => {
-        if (e) e.preventDefault();
-        const userMessage = inputValue.trim();
+    const handleSendMessage = async (message?: string) => {
+        const userMessage = message ?? inputValue.trim();
         if (!userMessage) return;
 
         setIsLoading(true);
@@ -98,31 +94,44 @@ export default function ComponentsAppsAI() {
         try {
             setConversation((prev) => [...prev, { role: 'user', text: userMessage }]);
 
-            const result = await model.generateContent(userMessage);
-            const response = await result.response;
-            const text = response.text();
+            const response = await fetch('/apps/api', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ message: userMessage }),
+            });
 
-            setConversation((prev) => [...prev, { role: 'gemini', text: text }]);
-        } catch (error) {
-            console.error('Error calling Gemini API:', error);
-            setConversation((prev) => [...prev, { role: 'gemini', text: 'Sorry, something went wrong. Please try again.' }]);
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || 'Failed to get response');
+            }
+
+            setConversation((prev) => [...prev, { role: 'gemini', text: data.text }]);
+        } catch (error: any) {
+            console.error('Error calling chat API:', error);
+            let errorMessage = 'Sorry, something went wrong. Please try again.';
+            if (error.message?.includes('API key')) {
+                errorMessage = '⚠️ Invalid API key. Please check your GEMINI_API_KEY in .env.local.';
+            }
+            setConversation((prev) => [...prev, { role: 'gemini', text: errorMessage }]);
         } finally {
             setIsLoading(false);
         }
     };
 
-    const copyToClipboard = (text) => {
+    const copyToClipboard = (text: string) => {
         navigator.clipboard.writeText(text);
     };
 
-    const handleKeyDown = (e) => {
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
         if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault();
             handleSendMessage();
         }
     };
 
-    // Auto-scroll to bottom when new messages are added
     useEffect(() => {
         if (chatContainerRef.current) {
             chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
@@ -131,25 +140,27 @@ export default function ComponentsAppsAI() {
 
     return (
         <>
-            <style jsx global>{`
-                ${animatedBorderStyle}
-            `}</style>
+            <style jsx global>
+                {animatedBorderStyle}
+            </style>
             <div className="panel px-6 pt-6 pb-6 h-screen flex flex-col text-black dark:text-white bg-white dark:bg-black">
-                <div className="flex-1 mt-56 flex flex-col min-h-0">
+                <div className="flex-1 flex flex-col min-h-0">
                     <div ref={chatContainerRef} className="flex-1 overflow-y-auto flex flex-col">
                         <div className={`flex flex-col items-center ${conversation.length === 0 ? 'justify-center flex-1' : 'py-6'}`}>
                             <h1 className="text-3xl font-bold mb-6 text-center">What do you want to know?</h1>
                             {conversation.length === 0 && (
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 w-full max-w-xl">
                                     <button
-                                        className={`w-full text-gray-900 dark:text-gray-100 text-left transition-colors duration-200 hover:bg-gray-200 dark:hover:bg-gray-700 animated-border-button`}
+                                        className="w-full text-gray-900 dark:text-gray-100 text-left transition-colors duration-200 hover:bg-gray-200 dark:hover:bg-gray-700 animated-border-button"
+                                        onClick={() => handleSendMessage(suggestions[0])}
                                     >
-                                        <span className="relative z-10">{suggestions.at(0)}</span>
+                                        <span>{suggestions[0]}</span>
                                     </button>
                                     <button
-                                        className={`w-full px-4 border border-gray-300 dark:border-gray-600 rounded-md bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 text-left py-3 transition-colors duration-200 hover:bg-gray-200 dark:hover:bg-gray-700`}
+                                        className="w-full px-4 border border-gray-300 dark:border-gray-600 rounded-md bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 text-left py-3 transition-colors duration-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+                                        onClick={() => handleSendMessage(suggestions[1])}
                                     >
-                                        {suggestions.at(1)}
+                                        {suggestions[1]}
                                     </button>
                                 </div>
                             )}
@@ -176,8 +187,14 @@ export default function ComponentsAppsAI() {
                         )}
                     </div>
                 </div>
-                <div className="flex-shrink-0 mb-20 flex flex-col items-center pt-4 pb-4">
-                    <form onSubmit={handleSendMessage} className="relative w-full max-w-xl mb-4">
+                <div className="flex-shrink-0 mb-36 flex flex-col items-center pt-4 pb-4">
+                    <form
+                        onSubmit={(e) => {
+                            e.preventDefault();
+                            handleSendMessage();
+                        }}
+                        className="relative w-full max-w-xl mb-4"
+                    >
                         <textarea
                             ref={inputRef}
                             value={inputValue}
