@@ -1,6 +1,7 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import { type NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
+// ⚠️ For testing only, don’t hardcode in real apps
 const API_KEY = 'AIzaSyBGm3mj0DOnQAE8vNIs64JXzLj6oz_bNI8';
 
 const genAI = new GoogleGenerativeAI(API_KEY);
@@ -17,10 +18,6 @@ export async function POST(request: NextRequest) {
         const result = await model.generateContent(message);
         const response = await result.response;
         const text = response.text();
-
-        // Logs
-        // console.log('Gemini text output:', text);
-        // console.log('Full Gemini API raw result:', JSON.stringify(result, null, 2));
 
         return NextResponse.json({ text });
     } catch (error: any) {

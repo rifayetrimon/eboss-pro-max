@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import { FiSend } from 'react-icons/fi';
 import { FaWhatsapp } from 'react-icons/fa';
 import { BiMessageDetail } from 'react-icons/bi';
+import { basePath } from '@/next.config';
 
 const animatedBorderStyle = `
 .animated-border-button {
@@ -94,7 +95,8 @@ export default function ComponentsAppsAI() {
         try {
             setConversation((prev) => [...prev, { role: 'user', text: userMessage }]);
 
-            const response = await fetch('/apps/api', {
+            // ✅ Fix: Use correct API path (works in dev + prod with basePath)
+            const response = await fetch(`${basePath}/apps/api`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

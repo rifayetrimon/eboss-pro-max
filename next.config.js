@@ -7,10 +7,10 @@ module.exports = {
     output: 'standalone',
     basePath: isProd ? '/eboss-pro-max' : '',
     assetPrefix: isProd ? '/eboss-pro-max' : '',
-    publicRuntimeConfig: {
-        basePath: isProd ? '/eboss-pro-max' : '',
-    },
     images: {
-        domains: ['devsec.awfatech.com'], // Add your API's domain here
+        domains: ['devsec.awfatech.com'],
+    },
+    env: {
+        NEXT_PUBLIC_BASE_PATH: isProd ? '/eboss-pro-max' : '',
     },
 };
