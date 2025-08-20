@@ -134,15 +134,11 @@ export default function ComponentsAppsAI() {
             <style jsx global>{`
                 ${animatedBorderStyle}
             `}</style>
-            <div className="panel px-6 pt-1 pb-6 h-screen flex flex-col text-black dark:text-white bg-white dark:bg-black">
-                <div className="flex-1 mt-44 flex flex-col min-h-0">
-                    {/* Chat area with fixed height and scroll */}
+            <div className="panel px-6 pt-6 pb-6 h-screen flex flex-col text-black dark:text-white bg-white dark:bg-black">
+                <div className="flex-1 mt-56 flex flex-col min-h-0">
                     <div ref={chatContainerRef} className="flex-1 overflow-y-auto flex flex-col">
-                        {/* Title section - always at top of scrollable area */}
                         <div className={`flex flex-col items-center ${conversation.length === 0 ? 'justify-center flex-1' : 'py-6'}`}>
                             <h1 className="text-3xl font-bold mb-6 text-center">What do you want to know?</h1>
-
-                            {/* Only show suggestion buttons when conversation is empty */}
                             {conversation.length === 0 && (
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 w-full max-w-xl">
                                     <button
@@ -158,8 +154,6 @@ export default function ComponentsAppsAI() {
                                 </div>
                             )}
                         </div>
-
-                        {/* Chat messages */}
                         {conversation.length > 0 && (
                             <div className="w-full max-w-xl mx-auto px-4 pb-4">
                                 {conversation.map((message, index) => (
@@ -182,8 +176,7 @@ export default function ComponentsAppsAI() {
                         )}
                     </div>
                 </div>
-
-                <div className="flex-shrink-0 flex mb-40 flex-col items-center pt-4">
+                <div className="flex-shrink-0 mb-20 flex flex-col items-center pt-4 pb-4">
                     <form onSubmit={handleSendMessage} className="relative w-full max-w-xl mb-4">
                         <textarea
                             ref={inputRef}
@@ -197,7 +190,6 @@ export default function ComponentsAppsAI() {
                             <FiSend size={20} />
                         </button>
                     </form>
-
                     <div className="flex justify-between w-full max-w-xl text-sm text-gray-500 dark:text-gray-400">
                         <span>
                             Powered by <b>awfatech</b> & <b>EBOSS</b>
