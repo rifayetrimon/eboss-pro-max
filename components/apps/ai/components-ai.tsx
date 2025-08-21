@@ -1,10 +1,12 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { FiSend } from 'react-icons/fi';
+import { FiSend, FiCopy, FiThumbsUp, FiThumbsDown } from 'react-icons/fi';
 import { FaWhatsapp } from 'react-icons/fa';
 import { BiMessageDetail } from 'react-icons/bi';
 import { basePath } from '@/next.config';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 const animatedBorderStyle = `
 .animated-border-button {
@@ -77,13 +79,14 @@ export default function ComponentsAppsAI() {
     const [inputValue, setInputValue] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [conversation, setConversation] = useState<{ role: string; text: string }[]>([]);
+    const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
+    const [likedIndex, setLikedIndex] = useState<number | null>(null);
+    const [dislikedIndex, setDislikedIndex] = useState<number | null>(null);
 
     const inputRef = useRef<HTMLTextAreaElement | null>(null);
     const chatContainerRef = useRef<HTMLDivElement | null>(null);
 
-    const toggleHelpMenu = () => {
-        setIsHelpMenuOpen(!isHelpMenuOpen);
-    };
+    const toggleHelpMenu = () => setIsHelpMenuOpen(!isHelpMenuOpen);
 
     const handleSendMessage = async (message?: string) => {
         const userMessage = message ?? inputValue.trim();
@@ -91,28 +94,20 @@ export default function ComponentsAppsAI() {
 
         setIsLoading(true);
         setInputValue('');
+        setConversation((prev) => [...prev, { role: 'user', text: userMessage }]);
 
         try {
-            setConversation((prev) => [...prev, { role: 'user', text: userMessage }]);
-
-            // ✅ Fix: Use correct API path (works in dev + prod with basePath)
             const response = await fetch(`${basePath}/apps/api`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ message: userMessage }),
             });
 
             const data = await response.json();
+            if (!response.ok) throw new Error(data.error || 'Failed to get response');
 
-            if (!response.ok) {
-                throw new Error(data.error || 'Failed to get response');
-            }
-
-            setConversation((prev) => [...prev, { role: 'gemini', text: data.text }]);
+            setConversation((prev) => [...prev, { role: 'gemini', text: data.text || data.message || 'No response from AI.' }]);
         } catch (error: any) {
-            console.error('Error calling chat API:', error);
             let errorMessage = 'Sorry, something went wrong. Please try again.';
             if (error.message?.includes('API key')) {
                 errorMessage = '⚠️ Invalid API key. Please check your GEMINI_API_KEY in .env.local.';
@@ -123,8 +118,20 @@ export default function ComponentsAppsAI() {
         }
     };
 
-    const copyToClipboard = (text: string) => {
+    const handleCopy = (text: string, index: number) => {
         navigator.clipboard.writeText(text);
+        setCopiedIndex(index);
+        setTimeout(() => setCopiedIndex(null), 1500);
+    };
+
+    const toggleLike = (index: number) => {
+        setLikedIndex(likedIndex === index ? null : index);
+        if (dislikedIndex === index) setDislikedIndex(null);
+    };
+
+    const toggleDislike = (index: number) => {
+        setDislikedIndex(dislikedIndex === index ? null : index);
+        if (likedIndex === index) setLikedIndex(null);
     };
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -145,11 +152,20 @@ export default function ComponentsAppsAI() {
             <style jsx global>
                 {animatedBorderStyle}
             </style>
+
+            {/* Gradient Defs */}
+            <svg width="0" height="0">
+                <linearGradient id="pinkRedGradient" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stopColor="#0046FF" />
+                    <stop offset="100%" stopColor="#FF3B3F" />
+                </linearGradient>
+            </svg>
+
             <div className="panel px-6 pt-6 pb-6 h-screen flex flex-col text-black dark:text-white bg-white dark:bg-black">
                 <div className="flex-1 flex flex-col min-h-0">
                     <div ref={chatContainerRef} className="flex-1 overflow-y-auto flex flex-col">
                         <div className={`flex flex-col items-center ${conversation.length === 0 ? 'justify-center flex-1' : 'py-6'}`}>
-                            <h1 className="text-3xl font-bold mb-6 text-center">What do you want to know?</h1>
+                            <h1 className="text-2xl font-bold mb-6 text-center">What do you want to know?</h1>
                             {conversation.length === 0 && (
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 w-full max-w-xl">
                                     <button
@@ -167,19 +183,50 @@ export default function ComponentsAppsAI() {
                                 </div>
                             )}
                         </div>
+
                         {conversation.length > 0 && (
-                            <div className="w-full max-w-xl mx-auto px-4 pb-4">
+                            <div className="w-full max-w-2xl mx-auto px-4 pb-4">
                                 {conversation.map((message, index) => (
                                     <div key={index}>
                                         <div className={`mb-4 ${message.role === 'user' ? 'text-right' : 'text-left'}`}>
-                                            <p className={`mb-2 ${message.role === 'user' ? 'inline-block bg-blue-100 dark:bg-blue-900 px-4 py-2 rounded-lg' : ''}`}>{message.text}</p>
-                                            <div className={`flex space-x-2 ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                                                <button onClick={() => copyToClipboard(message.text)} className="text-xs text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300">
-                                                    Copy
-                                                </button>
-                                                <button className="text-xs text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300">Like</button>
-                                                <button className="text-xs text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300">Dislike</button>
+                                            <div
+                                                className={`mb-2 inline-block px-4 py-2 rounded-lg max-w-full break-words bg-transparent text-gray-900 dark:text-gray-100 ${
+                                                    message.role === 'gemini' ? 'prose dark:prose-invert max-w-none' : ''
+                                                }`}
+                                            >
+                                                {message.role === 'gemini' ? <ReactMarkdown remarkPlugins={[remarkGfm]}>{message.text}</ReactMarkdown> : message.text}
                                             </div>
+
+                                            {message.role === 'gemini' && (
+                                                <div className="flex mt-2 space-x-3">
+                                                    {/* Copy */}
+                                                    <button onClick={() => handleCopy(message.text, index)} className="hover:scale-110 transition">
+                                                        <FiCopy
+                                                            size={14}
+                                                            className={copiedIndex === index ? 'text-transparent bg-clip-text' : 'text-black dark:text-white'}
+                                                            style={copiedIndex === index ? { stroke: 'url(#pinkRedGradient)' } : {}}
+                                                        />
+                                                    </button>
+
+                                                    {/* Like */}
+                                                    <button onClick={() => toggleLike(index)} className="hover:scale-110 transition">
+                                                        <FiThumbsUp
+                                                            size={14}
+                                                            className={likedIndex === index ? 'text-transparent bg-clip-text' : 'text-black dark:text-white'}
+                                                            style={likedIndex === index ? { stroke: 'url(#pinkRedGradient)' } : {}}
+                                                        />
+                                                    </button>
+
+                                                    {/* Dislike */}
+                                                    <button onClick={() => toggleDislike(index)} className="hover:scale-110 transition">
+                                                        <FiThumbsDown
+                                                            size={14}
+                                                            className={dislikedIndex === index ? 'text-transparent bg-clip-text' : 'text-black dark:text-white'}
+                                                            style={dislikedIndex === index ? { stroke: 'url(#pinkRedGradient)' } : {}}
+                                                        />
+                                                    </button>
+                                                </div>
+                                            )}
                                         </div>
                                         {index < conversation.length - 1 && <hr className="my-4 border-gray-100 dark:border-gray-800" />}
                                     </div>
@@ -189,13 +236,15 @@ export default function ComponentsAppsAI() {
                         )}
                     </div>
                 </div>
+
+                {/* Input */}
                 <div className="flex-shrink-0 mb-36 flex flex-col items-center pt-4 pb-4">
                     <form
                         onSubmit={(e) => {
                             e.preventDefault();
                             handleSendMessage();
                         }}
-                        className="relative w-full max-w-xl mb-4"
+                        className="relative w-full max-w-2xl mb-4"
                     >
                         <textarea
                             ref={inputRef}
@@ -209,7 +258,8 @@ export default function ComponentsAppsAI() {
                             <FiSend size={20} />
                         </button>
                     </form>
-                    <div className="flex justify-between w-full max-w-xl text-sm text-gray-500 dark:text-gray-400">
+
+                    <div className="flex justify-between w-full max-w-2xl text-sm text-gray-500 dark:text-gray-400">
                         <span>
                             Powered by <b>awfatech</b> & <b>EBOSS</b>
                         </span>
@@ -222,7 +272,7 @@ export default function ComponentsAppsAI() {
                             </button>
                             {isHelpMenuOpen && (
                                 <div className="absolute right-0 bottom-full mb-2 w-40 rounded-md shadow-lg bg-white dark:bg-gray-900 ring-1 ring-black ring-opacity-5 focus:outline-none">
-                                    <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                                    <div className="py-1" role="menu" aria-orientation="vertical">
                                         <a href="#" className="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800" role="menuitem">
                                             <BiMessageDetail className="h-4 w-4 mr-2" />
                                             Eboss Support
