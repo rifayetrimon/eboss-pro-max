@@ -1,7 +1,8 @@
 'use client';
 import { useEffect, useState } from 'react';
 import sortBy from 'lodash/sortBy';
-import IconArrowForward from '@/components/icon/icon-arrow-forward';
+import IconArrowLf from '@/components/icon/icon-arrow-lf';
+import IconArrowRt from '@/components/icon/icon-arrow-rg';
 
 type Staff = {
     id: number;
@@ -375,7 +376,7 @@ export default function StaffTable() {
                 <div className="flex items-center gap-2">
                     {/* Prev */}
                     <button className="flex items-center justify-center w-8 h-8 rounded-full border disabled:opacity-50" disabled={page === 1} onClick={() => setPage(page - 1)}>
-                        <IconArrowForward className="w-4 h-4" />
+                        <IconArrowLf className="w-4 h-4" />
                     </button>
 
                     {/* Page numbers */}
@@ -395,10 +396,183 @@ export default function StaffTable() {
                         disabled={page * pageSize >= staffData.length}
                         onClick={() => setPage(page + 1)}
                     >
-                        <IconArrowForward className="w-4 h-4" />
+                        <IconArrowRt className="w-4 h-4" />
                     </button>
                 </div>
             </div>
         </div>
     );
 }
+
+// for api
+
+// export default function StaffTable() {
+//     const PAGE_SIZES = [5, 10, 20];
+//     const [page, setPage] = useState(1);
+//     const [pageSize, setPageSize] = useState(PAGE_SIZES[1]);
+//     const [records, setRecords] = useState<Staff[]>([]);
+//     const [allStaff, setAllStaff] = useState<Staff[]>([]); // API data storage
+//     const [search, setSearch] = useState('');
+//     const [sortKey, setSortKey] = useState<keyof Staff>('name');
+//     const [sortDir, setSortDir] = useState<'asc' | 'desc'>('asc');
+
+//     // 1. Fetch API data once
+//     useEffect(() => {
+//         async function fetchStaff() {
+//             try {
+//                 const res = await fetch('/api/staff'); // replace with your API endpoint
+//                 const data = await res.json();
+//                 setAllStaff(data); // store the data
+//             } catch (err) {
+//                 console.error('Failed to fetch staff:', err);
+//             }
+//         }
+//         fetchStaff();
+//     }, []);
+
+//     // 2. Filtering, sorting, pagination
+//     useEffect(() => {
+//         let filtered = allStaff.filter(
+//             (s) =>
+//                 s.name.toLowerCase().includes(search.toLowerCase()) ||
+//                 s.email.toLowerCase().includes(search.toLowerCase()) ||
+//                 s.staffId.toLowerCase().includes(search.toLowerCase()) ||
+//                 s.position.toLowerCase().includes(search.toLowerCase()) ||
+//                 s.division.toLowerCase().includes(search.toLowerCase()),
+//         );
+
+//         let sorted = sortBy(filtered, sortKey);
+//         if (sortDir === 'desc') sorted = sorted.reverse();
+
+//         const from = (page - 1) * pageSize;
+//         const to = from + pageSize;
+//         setRecords(sorted.slice(from, to));
+//     }, [allStaff, page, pageSize, search, sortKey, sortDir]);
+
+//     const toggleSort = (key: keyof Staff) => {
+//         if (sortKey === key) {
+//             setSortDir(sortDir === 'asc' ? 'desc' : 'asc');
+//         } else {
+//             setSortKey(key);
+//             setSortDir('asc');
+//         }
+//         setPage(1);
+//     };
+
+//     return (
+//         <div className="panel mt-6">
+//             {/* Header */}
+//             <div className="mb-5 flex flex-col gap-5 md:flex-row md:items-center">
+//                 <h5 className="text-lg font-semibold dark:text-white-light">Staff Listing</h5>
+//                 <div className="ltr:ml-auto rtl:mr-auto">
+//                     <input type="text" className="form-input w-auto" placeholder="Search..." value={search} onChange={(e) => setSearch(e.target.value)} />
+//                 </div>
+//             </div>
+
+//             {/* Table */}
+//             <div className="overflow-x-auto">
+//                 <table className="w-full border-collapse table-fixed">
+//                     <thead>
+//                         <tr className="bg-gray-100 dark:bg-gray-800">
+//                             <th className="px-4 py-2 text-left cursor-pointer" onClick={() => toggleSort('name')}>
+//                                 User
+//                             </th>
+//                             <th className="px-4 py-2 cursor-pointer" onClick={() => toggleSort('email')}>
+//                                 Email
+//                             </th>
+//                             <th className="px-4 py-2 cursor-pointer" onClick={() => toggleSort('phone')}>
+//                                 H/P
+//                             </th>
+//                             <th className="px-4 py-2 cursor-pointer" onClick={() => toggleSort('position')}>
+//                                 Position
+//                             </th>
+//                             <th className="px-4 py-2 cursor-pointer" onClick={() => toggleSort('status')}>
+//                                 Status
+//                             </th>
+//                             <th className="px-4 py-2 cursor-pointer" onClick={() => toggleSort('division')}>
+//                                 Division
+//                             </th>
+//                         </tr>
+//                     </thead>
+//                     <tbody>
+//                         {records.map((s) => (
+//                             <tr key={s.id} className="border-b hover:bg-gray-50 dark:hover:bg-gray-700">
+//                                 <td className="px-4 py-3 flex items-center">
+//                                     <img src={s.avatar} className="h-10 w-10 rounded-full object-cover mr-3" alt={s.name} />
+//                                     <div>
+//                                         <div className="font-medium">{s.name}</div>
+//                                         <div className="text-sm text-gray-500">{s.staffId}</div>
+//                                     </div>
+//                                 </td>
+//                                 <td className="px-4 py-3">{s.email}</td>
+//                                 <td className="px-4 py-3">{s.phone}</td>
+//                                 <td className="px-4 py-3">{s.position}</td>
+//                                 <td className="px-4 py-3">
+//                                     <span className={`px-2 py-1 text-xs rounded-full ${s.status === 'active' ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'}`}>{s.status}</span>
+//                                 </td>
+//                                 <td className="px-4 py-3">{s.division}</td>
+//                             </tr>
+//                         ))}
+//                         {records.length === 0 && (
+//                             <tr>
+//                                 <td colSpan={6} className="text-center py-4 text-gray-500 dark:text-gray-400">
+//                                     No data found
+//                                 </td>
+//                             </tr>
+//                         )}
+//                     </tbody>
+//                 </table>
+//             </div>
+
+//             {/* Pagination */}
+//             <div className="flex justify-between items-center mt-4">
+//                 {/* Left: Showing entries + page size selector */}
+//                 <div className="flex items-center gap-3 text-sm text-gray-600 dark:text-gray-400">
+//                     <span>
+//                         Showing {(page - 1) * pageSize + 1} to {Math.min(page * pageSize, allStaff.length)} of {allStaff.length} entries
+//                     </span>
+
+//                     <select
+//                         className="border rounded px-2 py-1 text-sm"
+//                         value={pageSize}
+//                         onChange={(e) => {
+//                             setPageSize(Number(e.target.value));
+//                             setPage(1);
+//                         }}
+//                     >
+//                         {PAGE_SIZES.map((size) => (
+//                             <option key={size} value={size}>
+//                                 {size}
+//                             </option>
+//                         ))}
+//                     </select>
+//                 </div>
+
+//                 {/* Right: Pagination */}
+//                 <div className="flex items-center gap-2">
+//                     <button className="flex items-center justify-center w-8 h-8 rounded-full border disabled:opacity-50" disabled={page === 1} onClick={() => setPage(page - 1)}>
+//                         <IconArrowForward className="w-4 h-4" />
+//                     </button>
+
+//                     {Array.from({ length: Math.ceil(allStaff.length / pageSize) }, (_, i) => i + 1).map((p) => (
+//                         <button
+//                             key={p}
+//                             className={`w-8 h-8 rounded-full flex items-center justify-center text-sm ${p === page ? 'bg-blue-500 text-white' : 'border text-gray-700 dark:text-gray-300'}`}
+//                             onClick={() => setPage(p)}
+//                         >
+//                             {p}
+//                         </button>
+//                     ))}
+
+//                     <button
+//                         className="flex items-center justify-center w-8 h-8 rounded-full border disabled:opacity-50"
+//                         disabled={page * pageSize >= allStaff.length}
+//                         onClick={() => setPage(page + 1)}
+//                     >
+//                         <IconArrowForward className="w-4 h-4" />
+//                     </button>
+//                 </div>
+//             </div>
+//         </div>
+//     );
+// }
