@@ -3,6 +3,14 @@ import { useEffect, useState } from 'react';
 import sortBy from 'lodash/sortBy';
 import IconArrowLf from '@/components/icon/icon-arrow-lf';
 import IconArrowRt from '@/components/icon/icon-arrow-rg';
+import IconDownload from '@/components/icon/icon-download';
+import IconSend from '@/components/icon/icon-send';
+import IconPrinter from '@/components/icon/icon-printer';
+import { FileSpreadsheet, FileText, Mail, MessageSquare, Printer } from 'lucide-react';
+import Dropdown from '@/components/dropdown';
+import { useSelector } from 'react-redux';
+import { IRootState } from '@/store';
+import IconExcel from '@/components/icon/icon-excel';
 
 type Staff = {
     id: number;
@@ -247,8 +255,8 @@ export default function StaffTable() {
     const [search, setSearch] = useState('');
     const [sortKey, setSortKey] = useState<keyof Staff>('name');
     const [sortDir, setSortDir] = useState<'asc' | 'desc'>('asc');
+    const isRtl = useSelector((state: IRootState) => state.themeConfig.rtlClass) === 'rtl';
 
-    // filtering
     useEffect(() => {
         let filtered = staffData.filter(
             (s) =>
@@ -277,37 +285,145 @@ export default function StaffTable() {
         setPage(1);
     };
 
+    // helper function
+    // helper function
+    const handlePrint = () => {
+        // define which columns we want to print (keys from Staff)
+        const columns: (keyof Staff)[] = ['name', 'email', 'phone', 'position', 'status', 'division'];
+
+        let rowhtml = '<p>Staff Listing</p>';
+        rowhtml +=
+            '<table style="width: 100%;" cellpadding="0" cellspacing="0">' + '<thead><tr style="color: #515365; background: #eff5ff; -webkit-print-color-adjust: exact; print-color-adjust: exact;">';
+
+        // table headers
+        columns.forEach((col) => {
+            const header = col.charAt(0).toUpperCase() + col.slice(1); // capitalize
+            rowhtml += `<th>${header}</th>`;
+        });
+
+        rowhtml += '</tr></thead><tbody>';
+
+        // table rows
+        records.forEach((item) => {
+            rowhtml += '<tr>';
+            columns.forEach((col) => {
+                let val: any = item[col];
+                if (col === 'status') {
+                    // nice formatting for status
+                    val = item.status === 'active' ? `<span style="color:green;font-weight:600;">Active</span>` : `<span style="color:red;font-weight:600;">Inactive</span>`;
+                }
+                rowhtml += `<td>${val ?? ''}</td>`;
+            });
+            rowhtml += '</tr>';
+        });
+
+        rowhtml +=
+            '<style>body{font-family:Arial;color:#495057;}p{text-align:center;font-size:18px;font-weight:bold;margin:15px;}table{border-collapse:collapse;border-spacing:0;width:100%;}th,td{font-size:12px;text-align:left;padding:4px;border:1px solid #ddd;}th{padding:8px 4px;}td{padding:4px;}tr:nth-child(2n-1){background:#f7f7f7;}</style>';
+        rowhtml += '</tbody></table>';
+
+        const winPrint: any = window.open('', '', 'left=0,top=0,width=1000,height=600,toolbar=0,scrollbars=0,status=0');
+        winPrint.document.write('<title>Staff Listing</title>' + rowhtml);
+        winPrint.document.close();
+        winPrint.focus();
+        winPrint.print();
+    };
+
     return (
         <div className="panel mt-6">
             {/* Header */}
-            <div className="mb-5 flex flex-col gap-5 md:flex-row md:items-center">
+            <div className="mb-5 flex flex-col gap-4 md:flex-row md:items-center">
                 <h5 className="text-lg font-semibold dark:text-white-light">Staff Listing</h5>
-                <div className="ltr:ml-auto rtl:mr-auto">
-                    <input type="text" className="form-input w-auto" placeholder="Search..." value={search} onChange={(e) => setSearch(e.target.value)} />
+
+                {/* Controls */}
+                <div className="flex flex-wrap items-center gap-3 md:ml-auto">
+                    {/* Add New */}
+                    <button className="flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition w-full sm:w-auto justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                        </svg>
+                        Add New
+                    </button>
+
+                    {/* Download excel */}
+                    <button className="block rounded-full bg-white-light/40 p-2 hover:bg-white-light/90 hover:text-primary dark:bg-dark/40 dark:hover:bg-dark/60">
+                        <IconExcel className="w-4 h-4" />
+                    </button>
+
+                    {/* Print dropdown */}
+
+                    <div className="dropdown">
+                        <Dropdown
+                            placement={`${isRtl ? 'bottom-start' : 'bottom-end'}`}
+                            btnClassName="block rounded-full bg-white-light/40 p-2 hover:bg-white-light/90 hover:text-primary dark:bg-dark/40 dark:hover:bg-dark/60"
+                            button={<IconPrinter className="w-4 h-4" />}
+                        >
+                            <ul className="!min-w-[170px]">
+                                <li>
+                                    <button type="button" onClick={handlePrint} className="flex items-center gap-2 w-full px-3 py-2 hover:bg-gray-100 dark:hover:bg-dark/60">
+                                        <Printer className="w-4 h-4 text-gray-600" />
+                                        <span>Normal</span>
+                                    </button>
+                                </li>
+                                <li>
+                                    <button type="button" onClick={() => console.log('Print Landscape')} className="flex items-center gap-2 w-full px-3 py-2 hover:bg-gray-100 dark:hover:bg-dark/60">
+                                        <Printer className="w-4 h-4 text-gray-600" />
+                                        <span>Landscape</span>
+                                    </button>
+                                </li>
+                            </ul>
+                        </Dropdown>
+                    </div>
+
+                    {/* Send */}
+                    <div className="dropdown">
+                        <Dropdown
+                            placement={`${isRtl ? 'bottom-start' : 'bottom-end'}`}
+                            btnClassName="block rounded-full bg-white-light/40 p-2 hover:bg-white-light/90 hover:text-primary dark:bg-dark/40 dark:hover:bg-dark/60"
+                            button={<IconSend className="w-4 h-4" />}
+                        >
+                            <ul className="!min-w-[170px]">
+                                <li>
+                                    <button type="button" onClick={() => console.log('Send Email')} className="flex items-center gap-2 w-full px-3 py-2 hover:bg-gray-100 dark:hover:bg-dark/60">
+                                        <Mail className="w-4 h-4 text-blue-600" />
+                                        <span>Email</span>
+                                    </button>
+                                </li>
+                                <li>
+                                    <button type="button" onClick={() => console.log('Send SMS')} className="flex items-center gap-2 w-full px-3 py-2 hover:bg-gray-100 dark:hover:bg-dark/60">
+                                        <MessageSquare className="w-4 h-4 text-green-600" />
+                                        <span>SMS</span>
+                                    </button>
+                                </li>
+                            </ul>
+                        </Dropdown>
+                    </div>
+
+                    {/* Search */}
+                    <input type="text" className="form-input w-full sm:w-auto" placeholder="Search..." value={search} onChange={(e) => setSearch(e.target.value)} />
                 </div>
             </div>
 
             {/* Table */}
             <div className="overflow-x-auto">
-                <table className="w-full border-collapse table-fixed">
+                <table className="w-full border-collapse min-w-[700px]">
                     <thead>
                         <tr className="bg-gray-100 dark:bg-gray-800">
-                            <th className="px-4 py-2 text-left cursor-pointer" onClick={() => toggleSort('name')}>
+                            <th className="px-4 py-2 text-left cursor-pointer w-[20%]" onClick={() => toggleSort('name')}>
                                 User
                             </th>
-                            <th className="px-4 py-2 cursor-pointer" onClick={() => toggleSort('email')}>
+                            <th className="px-4 py-2 cursor-pointer w-[25%]" onClick={() => toggleSort('email')}>
                                 Email
                             </th>
-                            <th className="px-4 py-2 cursor-pointer" onClick={() => toggleSort('phone')}>
+                            <th className="px-4 py-2 cursor-pointer w-[20%]" onClick={() => toggleSort('phone')}>
                                 H/P
                             </th>
-                            <th className="px-4 py-2 cursor-pointer" onClick={() => toggleSort('position')}>
+                            <th className="px-4 py-2 cursor-pointer w-[12%]" onClick={() => toggleSort('position')}>
                                 Position
                             </th>
-                            <th className="px-4 py-2 cursor-pointer" onClick={() => toggleSort('status')}>
+                            <th className="px-4 py-2 cursor-pointer w-[10%]" onClick={() => toggleSort('status')}>
                                 Status
                             </th>
-                            <th className="px-4 py-2 cursor-pointer" onClick={() => toggleSort('division')}>
+                            <th className="px-4 py-2 cursor-pointer w-[13%]" onClick={() => toggleSort('division')}>
                                 Division
                             </th>
                         </tr>
@@ -336,20 +452,22 @@ export default function StaffTable() {
             </div>
 
             {/* Pagination */}
-            <div className="flex justify-between items-center mt-4">
-                {/* Left: Showing entries + page size selector */}
-                <div className="flex items-center gap-3 text-sm text-gray-600 dark:text-gray-400">
+            <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-4">
+                {/* Left */}
+                <div className="flex flex-col sm:flex-row items-center gap-3 text-sm text-gray-600 dark:text-gray-400">
                     <span>
                         Showing {(page - 1) * pageSize + 1} to {Math.min(page * pageSize, staffData.length)} of {staffData.length} entries
                     </span>
 
                     {/* Page size dropdown */}
-                    {/* Page size dropdown */}
                     <select
-                        className="border rounded px-2 py-1 text-sm appearance-none"
+                        className="border rounded px-2 py-1 text-sm text-center"
                         style={{
-                            backgroundColor: document.documentElement.classList.contains('dark') ? '#1f2937' : 'white', // dark:bg-gray-800 vs white
-                            color: document.documentElement.classList.contains('dark') ? '#e5e7eb' : '#1f2937', // dark:text-gray-200 vs gray-800
+                            backgroundColor: document.documentElement.classList.contains('white') ? '#1f2937' : 'white',
+                            color: document.documentElement.classList.contains('dark') ? '#e5e7eb' : '#1f2937',
+                            appearance: 'none',
+                            WebkitAppearance: 'none', // Safari
+                            MozAppearance: 'none', // Firefox
                         }}
                         value={pageSize}
                         onChange={(e) => {
@@ -358,28 +476,19 @@ export default function StaffTable() {
                         }}
                     >
                         {[5, 10, 20, 30, 50, 100].map((size) => (
-                            <option
-                                key={size}
-                                value={size}
-                                style={{
-                                    backgroundColor: document.documentElement.classList.contains('dark') ? '#1f2937' : 'white',
-                                    color: document.documentElement.classList.contains('dark') ? '#e5e7eb' : '#1f2937',
-                                }}
-                            >
+                            <option key={size} value={size}>
                                 {size}
                             </option>
                         ))}
                     </select>
                 </div>
 
-                {/* Right: Pagination */}
-                <div className="flex items-center gap-2">
-                    {/* Prev */}
+                {/* Right */}
+                <div className="flex flex-wrap items-center gap-2">
                     <button className="flex items-center justify-center w-8 h-8 rounded-full border disabled:opacity-50" disabled={page === 1} onClick={() => setPage(page - 1)}>
                         <IconArrowLf className="w-4 h-4" />
                     </button>
 
-                    {/* Page numbers */}
                     {Array.from({ length: Math.ceil(staffData.length / pageSize) }, (_, i) => i + 1).map((p) => (
                         <button
                             key={p}
@@ -390,7 +499,6 @@ export default function StaffTable() {
                         </button>
                     ))}
 
-                    {/* Next */}
                     <button
                         className="flex items-center justify-center w-8 h-8 rounded-full border disabled:opacity-50"
                         disabled={page * pageSize >= staffData.length}

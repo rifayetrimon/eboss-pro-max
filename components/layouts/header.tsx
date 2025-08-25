@@ -37,7 +37,6 @@ import { getTranslation } from '@/i18n';
 import { useProfile } from '@/hook/user/useProfile';
 import { basePath } from '@/lib/basePath';
 import { useLogout } from '@/hook/auth/useLogout';
-import LanguageDropdown from '../language-dropdown';
 import IconAI from '../icon/icon-ai';
 
 const Header = () => {
