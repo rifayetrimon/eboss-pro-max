@@ -3,10 +3,9 @@ import { useEffect, useState } from 'react';
 import sortBy from 'lodash/sortBy';
 import IconArrowLf from '@/components/icon/icon-arrow-lf';
 import IconArrowRt from '@/components/icon/icon-arrow-rg';
-import IconDownload from '@/components/icon/icon-download';
 import IconSend from '@/components/icon/icon-send';
 import IconPrinter from '@/components/icon/icon-printer';
-import { FileSpreadsheet, FileText, Mail, MessageSquare, Printer } from 'lucide-react';
+import { ChevronDown, Mail, MessageSquare, Printer } from 'lucide-react';
 import Dropdown from '@/components/dropdown';
 import { useSelector } from 'react-redux';
 import { IRootState } from '@/store';
@@ -255,6 +254,7 @@ export default function StaffTable() {
     const [search, setSearch] = useState('');
     const [sortKey, setSortKey] = useState<keyof Staff>('name');
     const [sortDir, setSortDir] = useState<'asc' | 'desc'>('asc');
+    const [showMore, setShowMore] = useState(false);
     const isRtl = useSelector((state: IRootState) => state.themeConfig.rtlClass) === 'rtl';
 
     useEffect(() => {
@@ -332,7 +332,81 @@ export default function StaffTable() {
         <div className="panel mt-6">
             {/* Header */}
             <div className="mb-5 flex flex-col gap-4 md:flex-row md:items-center">
-                <h5 className="text-lg font-semibold dark:text-white-light">Staff Listing</h5>
+                <div className="flex gap-3">
+                    {/* Search */}
+                    <input type="text" className="form-input w-[300px] max-w-full" placeholder="Search..." value={search} onChange={(e) => setSearch(e.target.value)} />
+
+                    {/* Dropdown 1 */}
+                    <div className="dropdown">
+                        <Dropdown
+                            placement={`${isRtl ? 'bottom-start' : 'bottom-end'}`}
+                            btnClassName="flex items-center justify-between gap-2 rounded-lg bg-white-light/40 px-3 py-2 
+                                            hover:bg-white-light/90 hover:text-primary dark:bg-dark/40 dark:hover:bg-dark/60 w-[180px]"
+                            button={
+                                <>
+                                    <span>All</span>
+                                    <ChevronDown className="w-4 h-4" />
+                                </>
+                            }
+                        >
+                            <ul className="!min-w-[180px]">
+                                <li>
+                                    <button type="button" onClick={() => console.log('Awfatech')} className="w-full px-3 py-2 text-left hover:bg-gray-100 dark:hover:bg-dark/60">
+                                        Awfatech
+                                    </button>
+                                </li>
+                                <li>
+                                    <button type="button" onClick={() => console.log('HQ')} className="w-full px-3 py-2 text-left hover:bg-gray-100 dark:hover:bg-dark/60">
+                                        HQ
+                                    </button>
+                                </li>
+                                <li>
+                                    <button type="button" onClick={() => console.log('School Awfa')} className="w-full px-3 py-2 text-left hover:bg-gray-100 dark:hover:bg-dark/60">
+                                        School Awfa
+                                    </button>
+                                </li>
+                            </ul>
+                        </Dropdown>
+                    </div>
+
+                    {/* Dropdown 2 */}
+                    <div className="dropdown">
+                        <Dropdown
+                            placement={`${isRtl ? 'bottom-start' : 'bottom-end'}`}
+                            btnClassName="flex items-center justify-between gap-2 rounded-lg bg-white-light/40 px-3 py-2 
+                                            hover:bg-white-light/90 hover:text-primary dark:bg-dark/40 dark:hover:bg-dark/60 w-[180px]"
+                            button={
+                                <>
+                                    <span>All Division</span>
+                                    <ChevronDown className="w-4 h-4" />
+                                </>
+                            }
+                        >
+                            <ul className="!min-w-[180px]">
+                                <li>
+                                    <button type="button" onClick={() => console.log('Awfatech')} className="w-full px-3 py-2 text-left hover:bg-gray-100 dark:hover:bg-dark/60">
+                                        Awfatech
+                                    </button>
+                                </li>
+                                <li>
+                                    <button type="button" onClick={() => console.log('HQ')} className="w-full px-3 py-2 text-left hover:bg-gray-100 dark:hover:bg-dark/60">
+                                        HQ
+                                    </button>
+                                </li>
+                                <li>
+                                    <button type="button" onClick={() => console.log('School Awfa')} className="w-full px-3 py-2 text-left hover:bg-gray-100 dark:hover:bg-dark/60">
+                                        School Awfa
+                                    </button>
+                                </li>
+                            </ul>
+                        </Dropdown>
+                    </div>
+
+                    {/* 🔘 More / Less toggle */}
+                    <button type="button" onClick={() => setShowMore(!showMore)} className="text-blue-600 mb-0 pb-0 hover:underline">
+                        {showMore ? 'Less' : 'More'}
+                    </button>
+                </div>
 
                 {/* Controls */}
                 <div className="flex flex-wrap items-center gap-3 md:ml-auto">
@@ -350,7 +424,6 @@ export default function StaffTable() {
                     </button>
 
                     {/* Print dropdown */}
-
                     <div className="dropdown">
                         <Dropdown
                             placement={`${isRtl ? 'bottom-start' : 'bottom-end'}`}
@@ -374,7 +447,7 @@ export default function StaffTable() {
                         </Dropdown>
                     </div>
 
-                    {/* Send */}
+                    {/* Send dropdown */}
                     <div className="dropdown">
                         <Dropdown
                             placement={`${isRtl ? 'bottom-start' : 'bottom-end'}`}
@@ -397,11 +470,118 @@ export default function StaffTable() {
                             </ul>
                         </Dropdown>
                     </div>
-
-                    {/* Search */}
-                    <input type="text" className="form-input w-full sm:w-auto" placeholder="Search..." value={search} onChange={(e) => setSearch(e.target.value)} />
                 </div>
             </div>
+
+            {/* 🔹 Dropdown Row (shown only if More is clicked) */}
+            {showMore && (
+                <div className="mb-5 flex flex-col gap-4 md:flex-row md:items-center">
+                    {/* Dropdown 1 */}
+                    <div className="dropdown">
+                        <Dropdown
+                            placement={`${isRtl ? 'bottom-start' : 'bottom-end'}`}
+                            btnClassName="flex items-center justify-between gap-2 rounded-lg bg-white-light/40 px-3 py-2 
+                                hover:bg-white-light/90 hover:text-primary dark:bg-dark/40 dark:hover:bg-dark/60 w-[180px]"
+                            button={
+                                <>
+                                    <span>All Position</span>
+                                    <ChevronDown className="w-4 h-4" />
+                                </>
+                            }
+                        >
+                            <ul className="!min-w-[180px]">
+                                <li>
+                                    <button type="button" onClick={() => console.log('Awfatech')} className="w-full px-3 py-2 text-left hover:bg-gray-100 dark:hover:bg-dark/60">
+                                        Awfatech
+                                    </button>
+                                </li>
+                                <li>
+                                    <button type="button" onClick={() => console.log('HQ')} className="w-full px-3 py-2 text-left hover:bg-gray-100 dark:hover:bg-dark/60">
+                                        HQ
+                                    </button>
+                                </li>
+                                <li>
+                                    <button type="button" onClick={() => console.log('School Awfa')} className="w-full px-3 py-2 text-left hover:bg-gray-100 dark:hover:bg-dark/60">
+                                        School Awfa
+                                    </button>
+                                </li>
+                            </ul>
+                        </Dropdown>
+                    </div>
+
+                    {/* Dropdown 2 */}
+                    <div className="dropdown">
+                        <Dropdown
+                            placement={`${isRtl ? 'bottom-start' : 'bottom-end'}`}
+                            btnClassName="flex items-center justify-between gap-2 rounded-lg bg-white-light/40 px-3 py-2 
+                                hover:bg-white-light/90 hover:text-primary dark:bg-dark/40 dark:hover:bg-dark/60 w-[180px]"
+                            button={
+                                <>
+                                    <span>All Status</span>
+                                    <ChevronDown className="w-4 h-4" />
+                                </>
+                            }
+                        >
+                            <ul className="!min-w-[180px]">
+                                <li>
+                                    <button type="button" onClick={() => console.log('Active')} className="w-full px-3 py-2 text-left hover:bg-gray-100 dark:hover:bg-dark/60">
+                                        Active
+                                    </button>
+                                </li>
+                                <li>
+                                    <button type="button" onClick={() => console.log('Inactive')} className="w-full px-3 py-2 text-left hover:bg-gray-100 dark:hover:bg-dark/60">
+                                        Inactive
+                                    </button>
+                                </li>
+                            </ul>
+                        </Dropdown>
+                    </div>
+
+                    {/* Dropdown 3 */}
+                    <div className="dropdown">
+                        <Dropdown
+                            placement={`${isRtl ? 'bottom-start' : 'bottom-end'}`}
+                            btnClassName="flex items-center justify-between gap-2 rounded-lg bg-white-light/40 px-3 py-2 
+                                hover:bg-white-light/90 hover:text-primary dark:bg-dark/40 dark:hover:bg-dark/60 w-[180px]"
+                            button={
+                                <>
+                                    <span>Gender</span>
+                                    <ChevronDown className="w-4 h-4" />
+                                </>
+                            }
+                        >
+                            <ul className="!min-w-[180px]">
+                                <li>
+                                    <button type="button" onClick={() => console.log('Male')} className="w-full px-3 py-2 text-left hover:bg-gray-100 dark:hover:bg-dark/60">
+                                        Male
+                                    </button>
+                                </li>
+                                <li>
+                                    <button type="button" onClick={() => console.log('Female')} className="w-full px-3 py-2 text-left hover:bg-gray-100 dark:hover:bg-dark/60">
+                                        Female
+                                    </button>
+                                </li>
+                            </ul>
+                        </Dropdown>
+                    </div>
+
+                    {/* ✅ Checkboxes Section */}
+                    <div className="flex items-center gap-4">
+                        <label className="flex items-center gap-2 cursor-pointer">
+                            <input type="checkbox" className="form-checkbox text-primary" />
+                            <span>Show inactive</span>
+                        </label>
+                        <label className="flex items-center gap-2 cursor-pointer">
+                            <input type="checkbox" className="form-checkbox text-primary" />
+                            <span>Show Deleted</span>
+                        </label>
+                        <label className="flex items-center gap-2 cursor-pointer">
+                            <input type="checkbox" className="form-checkbox text-primary" />
+                            <span>Search All</span>
+                        </label>
+                    </div>
+                </div>
+            )}
 
             {/* Table */}
             <div className="overflow-x-auto">
