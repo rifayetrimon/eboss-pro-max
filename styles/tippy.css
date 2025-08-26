@@ -53,3 +53,12 @@
 .tippy-box[data-theme~='dark'][data-placement^='top'] > .tippy-arrow::before {
     border-top-color: #3b3f5c;
 }
+
+.tippy-box[data-theme~='white-light'] {
+    background-color: #f5f5f4; /* white with 90% opacity */
+    color: #111827; /* neutral dark text, Tailwind gray-900 */ /* light gray border */
+    backdrop-filter: blur(4px); /* optional glass effect */
+    padding: 10px;
+    font-size: 12px;
+    border-radius: 3px;
+}

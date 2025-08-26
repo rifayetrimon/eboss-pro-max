@@ -10,6 +10,7 @@ import Dropdown from '@/components/dropdown';
 import { useSelector } from 'react-redux';
 import { IRootState } from '@/store';
 import IconExcel from '@/components/icon/icon-excel';
+import Tippy from '@tippyjs/react';
 
 type Staff = {
     id: number;
@@ -403,7 +404,7 @@ export default function StaffTable() {
                     </div>
 
                     {/* 🔘 More / Less toggle */}
-                    <button type="button" onClick={() => setShowMore(!showMore)} className="text-blue-600 mb-0 pb-0 hover:underline">
+                    <button type="button" onClick={() => setShowMore(!showMore)} className="text-blue-600 font-semibold text-start mb-0 pb-0 hover:underline">
                         {showMore ? 'Less' : 'More'}
                     </button>
                 </div>
@@ -411,77 +412,88 @@ export default function StaffTable() {
                 {/* Controls */}
                 <div className="flex flex-wrap items-center gap-3 md:ml-auto">
                     {/* Add New */}
-                    <button className="flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition w-full sm:w-auto justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                        </svg>
-                        Add New
-                    </button>
-
+                    <Tippy content="Register new staff" theme="white-light">
+                        <button type="button" className="flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition w-full sm:w-auto justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                            </svg>
+                            Add New
+                        </button>
+                    </Tippy>
                     {/* Download excel */}
-                    <button className="block rounded-full bg-white-light/40 p-2 hover:bg-white-light/90 hover:text-primary dark:bg-dark/40 dark:hover:bg-dark/60">
-                        <IconExcel className="w-4 h-4" />
-                    </button>
+                    <Tippy content="Download Excel" theme="white-light">
+                        <button className="block rounded-full bg-white-light/40 p-2 hover:bg-white-light/90 hover:text-primary dark:bg-dark/40 dark:hover:bg-dark/60">
+                            <IconExcel className="w-4 h-4" />
+                        </button>
+                    </Tippy>
 
                     {/* Print dropdown */}
-                    <div className="dropdown">
-                        <Dropdown
-                            placement={`${isRtl ? 'bottom-start' : 'bottom-end'}`}
-                            btnClassName="block rounded-full bg-white-light/40 p-2 hover:bg-white-light/90 hover:text-primary dark:bg-dark/40 dark:hover:bg-dark/60"
-                            button={<IconPrinter className="w-4 h-4" />}
-                        >
-                            <ul className="!min-w-[170px]">
-                                <li>
-                                    <button type="button" onClick={handlePrint} className="flex items-center gap-2 w-full px-3 py-2 hover:bg-gray-100 dark:hover:bg-dark/60">
-                                        <Printer className="w-4 h-4 text-gray-600" />
-                                        <span>Normal</span>
-                                    </button>
-                                </li>
-                                <li>
-                                    <button type="button" onClick={() => console.log('Print Landscape')} className="flex items-center gap-2 w-full px-3 py-2 hover:bg-gray-100 dark:hover:bg-dark/60">
-                                        <Printer className="w-4 h-4 text-gray-600" />
-                                        <span>Landscape</span>
-                                    </button>
-                                </li>
-                            </ul>
-                        </Dropdown>
-                    </div>
+                    <Tippy content="Print Data" theme="white-light">
+                        <div className="dropdown">
+                            <Dropdown
+                                placement={`${isRtl ? 'bottom-start' : 'bottom-end'}`}
+                                btnClassName="block rounded-full bg-white-light/40 p-2 hover:bg-white-light/90 hover:text-primary dark:bg-dark/40 dark:hover:bg-dark/60"
+                                button={<IconPrinter className="w-4 h-4" />}
+                            >
+                                <ul className="!min-w-[170px]">
+                                    <li>
+                                        <button type="button" onClick={handlePrint} className="flex items-center gap-2 w-full px-3 py-2 hover:bg-gray-100 dark:hover:bg-dark/60">
+                                            <Printer className="w-4 h-4 text-gray-600" />
+                                            <span>Normal</span>
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button
+                                            type="button"
+                                            onClick={() => console.log('Print Landscape')}
+                                            className="flex items-center gap-2 w-full px-3 py-2 hover:bg-gray-100 dark:hover:bg-dark/60"
+                                        >
+                                            <Printer className="w-4 h-4 text-gray-600" />
+                                            <span>Landscape</span>
+                                        </button>
+                                    </li>
+                                </ul>
+                            </Dropdown>
+                        </div>
+                    </Tippy>
 
                     {/* Send dropdown */}
-                    <div className="dropdown">
-                        <Dropdown
-                            placement={`${isRtl ? 'bottom-start' : 'bottom-end'}`}
-                            btnClassName="block rounded-full bg-white-light/40 p-2 hover:bg-white-light/90 hover:text-primary dark:bg-dark/40 dark:hover:bg-dark/60"
-                            button={<IconSend className="w-4 h-4" />}
-                        >
-                            <ul className="!min-w-[170px]">
-                                <li>
-                                    <button type="button" onClick={() => console.log('Send Email')} className="flex items-center gap-2 w-full px-3 py-2 hover:bg-gray-100 dark:hover:bg-dark/60">
-                                        <Mail className="w-4 h-4 text-blue-600" />
-                                        <span>Email</span>
-                                    </button>
-                                </li>
-                                <li>
-                                    <button type="button" onClick={() => console.log('Send SMS')} className="flex items-center gap-2 w-full px-3 py-2 hover:bg-gray-100 dark:hover:bg-dark/60">
-                                        <MessageSquare className="w-4 h-4 text-green-600" />
-                                        <span>SMS</span>
-                                    </button>
-                                </li>
-                            </ul>
-                        </Dropdown>
-                    </div>
+                    <Tippy content="Send Messages" theme="white-light">
+                        <div className="dropdown">
+                            <Dropdown
+                                placement={`${isRtl ? 'bottom-start' : 'bottom-end'}`}
+                                btnClassName="block rounded-full bg-white-light/40 p-2 hover:bg-white-light/90 hover:text-primary dark:bg-dark/40 dark:hover:bg-dark/60"
+                                button={<IconSend className="w-4 h-4" />}
+                            >
+                                <ul className="!min-w-[170px]">
+                                    <li>
+                                        <button type="button" onClick={() => console.log('Send Email')} className="flex items-center gap-2 w-full px-3 py-2 hover:bg-gray-100 dark:hover:bg-dark/60">
+                                            <Mail className="w-4 h-4 text-blue-600" />
+                                            <span>Email</span>
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button type="button" onClick={() => console.log('Send SMS')} className="flex items-center gap-2 w-full px-3 py-2 hover:bg-gray-100 dark:hover:bg-dark/60">
+                                            <MessageSquare className="w-4 h-4 text-green-600" />
+                                            <span>SMS</span>
+                                        </button>
+                                    </li>
+                                </ul>
+                            </Dropdown>
+                        </div>
+                    </Tippy>
                 </div>
             </div>
 
-            {/* 🔹 Dropdown Row (shown only if More is clicked) */}
-            {showMore && (
+            {/* 🔹 Dropdown Row (animated) */}
+            <div className={`transition-all duration-300 ease-in-out overflow-hidden ${showMore ? 'max-h-40 opacity-100 mt-4' : 'max-h-0 opacity-0'}`}>
                 <div className="mb-5 flex flex-col gap-4 md:flex-row md:items-center">
                     {/* Dropdown 1 */}
                     <div className="dropdown">
                         <Dropdown
                             placement={`${isRtl ? 'bottom-start' : 'bottom-end'}`}
                             btnClassName="flex items-center justify-between gap-2 rounded-lg bg-white-light/40 px-3 py-2 
-                                hover:bg-white-light/90 hover:text-primary dark:bg-dark/40 dark:hover:bg-dark/60 w-[180px]"
+                    hover:bg-white-light/90 hover:text-primary dark:bg-dark/40 dark:hover:bg-dark/60 w-[180px]"
                             button={
                                 <>
                                     <span>All Position</span>
@@ -514,7 +526,7 @@ export default function StaffTable() {
                         <Dropdown
                             placement={`${isRtl ? 'bottom-start' : 'bottom-end'}`}
                             btnClassName="flex items-center justify-between gap-2 rounded-lg bg-white-light/40 px-3 py-2 
-                                hover:bg-white-light/90 hover:text-primary dark:bg-dark/40 dark:hover:bg-dark/60 w-[180px]"
+                    hover:bg-white-light/90 hover:text-primary dark:bg-dark/40 dark:hover:bg-dark/60 w-[180px]"
                             button={
                                 <>
                                     <span>All Status</span>
@@ -542,7 +554,7 @@ export default function StaffTable() {
                         <Dropdown
                             placement={`${isRtl ? 'bottom-start' : 'bottom-end'}`}
                             btnClassName="flex items-center justify-between gap-2 rounded-lg bg-white-light/40 px-3 py-2 
-                                hover:bg-white-light/90 hover:text-primary dark:bg-dark/40 dark:hover:bg-dark/60 w-[180px]"
+                    hover:bg-white-light/90 hover:text-primary dark:bg-dark/40 dark:hover:bg-dark/60 w-[180px]"
                             button={
                                 <>
                                     <span>Gender</span>
@@ -565,7 +577,7 @@ export default function StaffTable() {
                         </Dropdown>
                     </div>
 
-                    {/* ✅ Checkboxes Section */}
+                    {/* ✅ Checkboxes */}
                     <div className="flex items-center gap-4">
                         <label className="flex items-center gap-2 cursor-pointer">
                             <input type="checkbox" className="form-checkbox text-primary" />
@@ -581,7 +593,7 @@ export default function StaffTable() {
                         </label>
                     </div>
                 </div>
-            )}
+            </div>
 
             {/* Table */}
             <div className="overflow-x-auto">
