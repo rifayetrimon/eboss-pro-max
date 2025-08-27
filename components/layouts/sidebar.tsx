@@ -153,10 +153,10 @@ const Sidebar = () => {
                                         </Link>
                                     </li>
                                     <li className="nav-item">
-                                        <Link href="/apps/mailbox" className="group">
+                                        <Link href="/staff_two" className="group">
                                             <div className="flex items-center">
                                                 <IconMenuMailbox className="shrink-0 group-hover:!text-primary" />
-                                                <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">{t('mailbox')}</span>
+                                                <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">{t('staff 2')}</span>
                                             </div>
                                         </Link>
                                     </li>

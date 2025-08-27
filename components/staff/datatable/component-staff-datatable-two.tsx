@@ -247,7 +247,7 @@ const staffData: Staff[] = [
     },
 ];
 
-export default function StaffTable() {
+export default function StaffTableTwo() {
     const PAGE_SIZES = [5, 10, 20];
     const [page, setPage] = useState(1);
     const [pageSize, setPageSize] = useState(PAGE_SIZES[1]);
@@ -641,16 +641,13 @@ export default function StaffTable() {
                                         <img src={s.avatar || '/placeholder.svg'} className="h-8 w-8 sm:h-10 sm:w-10 rounded-full object-cover mr-2 sm:mr-3 flex-shrink-0" alt={s.name} />
                                         <div className="min-w-0">
                                             <div className="font-medium text-sm sm:text-base truncate">{s.name}</div>
+                                            <div className="text-xs sm:text-sm text-gray-500 truncate">{s.staffId}</div>
 
-                                            <div className="flex gap-2 items-center">
-                                                <div className="text-xs sm:text-sm text-gray-500 truncate">{s.staffId}</div>
-
-                                                {/* Status only shown in mobile under User */}
-                                                <div className="text-xs mt-1 sm:hidden">
-                                                    <span className={`px-2 py-0.5 rounded-full text-[10px] ${s.status === 'active' ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'}`}>
-                                                        {s.status}
-                                                    </span>
-                                                </div>
+                                            {/* Status only shown in mobile under User */}
+                                            <div className="text-xs mt-1 sm:hidden">
+                                                <span className={`px-2 py-0.5 rounded-full text-[10px] ${s.status === 'active' ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'}`}>
+                                                    {s.status}
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
@@ -706,7 +703,7 @@ export default function StaffTable() {
                         Showing {(page - 1) * pageSize + 1} to {Math.min(page * pageSize, staffData.length)} of {staffData.length} entries
                     </span>
                     <select
-                        className="border rounded px-2 py-1 text-sm text-center min-w-[60px] appearance-none bg-transparent"
+                        className="border rounded px-2 py-1 text-sm text-center min-w-[60px]"
                         value={pageSize}
                         onChange={(e) => {
                             setPageSize(Number(e.target.value));
