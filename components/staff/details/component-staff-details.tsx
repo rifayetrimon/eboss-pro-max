@@ -11,11 +11,32 @@ import { basePath } from '@/lib/basePath';
 import Image from 'next/image';
 import React, { useState } from 'react';
 
+type Experience = {
+    position: string;
+    grade: string;
+    division: string;
+    employer: string;
+    startDate: Date | null;
+    endDate: Date | null;
+};
+
 export default function ComponentStaffDetails() {
     const [tabs, setTabs] = useState<string>('system-information');
     const [date, setDate] = useState<Date[] | null>(null);
     const toggleTabs = (name: string) => {
         setTabs(name);
+    };
+    const [experiences, setExperiences] = useState<Experience[]>([{ position: '', grade: '', division: '', employer: '', startDate: null, endDate: null }]);
+
+    const addExperience = () => {
+        setExperiences([...experiences, { position: '', grade: '', division: '', employer: '', startDate: null, endDate: null }]);
+    };
+
+    // ✅ properly typed handleChange
+    const handleChange = <K extends keyof Experience>(index: number, field: K, value: Experience[K]) => {
+        const updated = [...experiences];
+        updated[index][field] = value;
+        setExperiences(updated);
     };
 
     return (
@@ -451,81 +472,109 @@ export default function ComponentStaffDetails() {
             {tabs === 'academic' ? (
                 <div>
                     <form className="mb-5 rounded-md border border-[#ebedf2] bg-white p-4 dark:border-[#191e3a] dark:bg-black">
-                        <h6 className="mb-5 text-lg font-bold">Permanent Address</h6>
-                        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-                            {/* ✅ Address spans 2 columns */}
-                            <div className="sm:col-span-2">
-                                <label htmlFor="ctnTextarea">Address</label>
-                                <textarea id="ctnTextarea" rows={3} className="form-textarea w-full" placeholder="Enter Address" required></textarea>
+                        <h6 className="mb-5 text-lg font-bold">Academic Degree</h6>
+                        <div className="grid grid-cols-1 gap-5 sm:grid-cols-6">
+                            {/* ✅ Qualification (1 column) */}
+                            <div className="sm:col-span-1">
+                                <label htmlFor="qualification">Qualification</label>
+                                <input id="qualification" type="text" className="form-input w-full" placeholder="Enter Degree" required />
                             </div>
 
-                            {/* ✅ State */}
-                            <div>
-                                <label htmlFor="state">State</label>
-                                <select id="state" className="form-select text-white-dark" name="state" defaultValue="Select">
-                                    <option value="Select" disabled>
-                                        Select
-                                    </option>
-                                    <option value="Selangor">Selangor</option>
-                                    <option value="Johor">Johor</option>
-                                    <option value="Kedah">Kedah</option>
-                                </select>
+                            {/* ✅ Institute Name (big width → 3 columns) */}
+                            <div className="sm:col-span-4">
+                                <label htmlFor="institute">Institute Name</label>
+                                <input id="institute" type="text" className="form-input w-full" placeholder="Enter Institute Name" required />
                             </div>
 
-                            {/* ✅ Country */}
-                            <div>
-                                <label htmlFor="country">Country</label>
-                                <select id="country" className="form-select text-white-dark" name="country" defaultValue="Select">
-                                    <option value="Select" disabled>
-                                        Select
-                                    </option>
-                                    <option value="United States">United States</option>
-                                    <option value="Malaysia">Malaysia</option>
-                                </select>
+                            {/* ✅ Passing Year (1 column) */}
+                            <div className="sm:col-span-1">
+                                <label htmlFor="passingYear">Passing Year</label>
+                                <input id="passingYear" type="text" className="form-input w-full" placeholder="YYYY" required />
                             </div>
                         </div>
+                        <div className="grid grid-cols-1 mt-5 gap-5 sm:grid-cols-6">
+                            {/* ✅ Qualification (1 column) */}
+                            <div className="sm:col-span-1">
+                                {/* <label htmlFor="qualification">Qualification</label> */}
+                                <input id="qualification" type="text" className="form-input w-full" placeholder="Enter Degree" required />
+                            </div>
 
-                        <div className="mt-10">
-                            <label className="inline-flex cursor-pointer">
-                                <input type="checkbox" className="form-checkbox" />
-                                <span className="relative text-white-dark checked:bg-none">Please Check If Mailing Address Same As Above</span>
-                            </label>
+                            {/* ✅ Institute Name (big width → 3 columns) */}
+                            <div className="sm:col-span-4">
+                                {/* <label htmlFor="institute">Institute Name</label> */}
+                                <input id="institute" type="text" className="form-input w-full" placeholder="Enter Institute Name" required />
+                            </div>
+
+                            {/* ✅ Passing Year (1 column) */}
+                            <div className="sm:col-span-1">
+                                {/* <label htmlFor="passingYear">Passing Year</label> */}
+                                <input id="passingYear" type="text" className="form-input w-full" placeholder="YYYY" required />
+                            </div>
                         </div>
-
-                        <h6 className="mb-5 mt-10 text-lg font-bold">Present Address</h6>
-                        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-                            {/* ✅ Address spans 2 columns */}
-                            <div className="sm:col-span-2">
-                                <label htmlFor="ctnTextarea">Address</label>
-                                <textarea id="ctnTextarea" rows={3} className="form-textarea w-full" placeholder="Enter Address" required></textarea>
+                        <div className="grid grid-cols-1 mt-5 gap-5 sm:grid-cols-6">
+                            {/* ✅ Qualification (1 column) */}
+                            <div className="sm:col-span-1">
+                                {/* <label htmlFor="qualification">Qualification</label> */}
+                                <input id="qualification" type="text" className="form-input w-full" placeholder="Enter Degree" required />
                             </div>
 
-                            {/* ✅ State */}
-                            <div>
-                                <label htmlFor="state">State</label>
-                                <select id="state" className="form-select text-white-dark" name="state" defaultValue="Select">
-                                    <option value="Select" disabled>
-                                        Select
-                                    </option>
-                                    <option value="Selangor">Selangor</option>
-                                    <option value="Johor">Johor</option>
-                                    <option value="Kedah">Kedah</option>
-                                </select>
+                            {/* ✅ Institute Name (big width → 3 columns) */}
+                            <div className="sm:col-span-4">
+                                {/* <label htmlFor="institute">Institute Name</label> */}
+                                <input id="institute" type="text" className="form-input w-full" placeholder="Enter Institute Name" required />
                             </div>
 
-                            {/* ✅ Country */}
-                            <div>
-                                <label htmlFor="country">Country</label>
-                                <select id="country" className="form-select text-white-dark" name="country" defaultValue="Select">
-                                    <option value="Select" disabled>
-                                        Select
-                                    </option>
-                                    <option value="United States">United States</option>
-                                    <option value="Malaysia">Malaysia</option>
-                                </select>
+                            {/* ✅ Passing Year (1 column) */}
+                            <div className="sm:col-span-1">
+                                {/* <label htmlFor="passingYear">Passing Year</label> */}
+                                <input id="passingYear" type="text" className="form-input w-full" placeholder="YYYY" required />
                             </div>
                         </div>
                     </form>
+                </div>
+            ) : (
+                ''
+            )}
+            {tabs === 'working-experience' ? (
+                <div>
+                    {experiences.map((exp, index) => (
+                        <form key={index} className="mb-5 rounded-md border border-[#ebedf2] bg-white p-4 dark:border-[#191e3a] dark:bg-black">
+                            <h6 className="mb-5 text-lg font-bold">Working Experience {index + 1}</h6>
+                            <div className="flex flex-col sm:flex-row">
+                                <div className="grid flex-1 grid-cols-1 gap-5 sm:grid-cols-2">
+                                    <div>
+                                        <label>Position</label>
+                                        <input type="text" placeholder="Enter Position" className="form-input" value={exp.position} onChange={(e) => handleChange(index, 'position', e.target.value)} />
+                                    </div>
+                                    <div>
+                                        <label>Grade</label>
+                                        <input type="text" placeholder="Enter Grade" className="form-input" value={exp.grade} onChange={(e) => handleChange(index, 'grade', e.target.value)} />
+                                    </div>
+                                    <div>
+                                        <label>Division</label>
+                                        <input type="text" placeholder="Enter Division" className="form-input" value={exp.division} onChange={(e) => handleChange(index, 'division', e.target.value)} />
+                                    </div>
+                                    <div>
+                                        <label>Employer</label>
+                                        <input type="text" placeholder="Enter Employer" className="form-input" value={exp.employer} onChange={(e) => handleChange(index, 'employer', e.target.value)} />
+                                    </div>
+                                    <div>
+                                        <label htmlFor="profession">Start Date</label>
+                                        <DatePicker value={date} onChange={setDate} />
+                                    </div>
+                                    <div>
+                                        <label htmlFor="profession">End Date</label>
+                                        <DatePicker value={date} onChange={setDate} />
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    ))}
+
+                    {/* Add More Button */}
+                    <button type="button" onClick={addExperience} className="rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700">
+                        + Add More
+                    </button>
                 </div>
             ) : (
                 ''
