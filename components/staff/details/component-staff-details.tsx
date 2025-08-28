@@ -6,10 +6,12 @@ import IconLinkedin from '@/components/icon/icon-linkedin';
 import IconPhone from '@/components/icon/icon-phone';
 import IconTwitter from '@/components/icon/icon-twitter';
 import IconUser from '@/components/icon/icon-user';
+import DatePicker from '@/components/ui/date-picker';
 import React, { useState } from 'react';
 
 export default function ComponentStaffDetails() {
     const [tabs, setTabs] = useState<string>('home');
+    const [date, setDate] = useState<Date[] | null>(null);
     const toggleTabs = (name: string) => {
         setTabs(name);
     };
@@ -101,8 +103,8 @@ export default function ComponentStaffDetails() {
                                 </div>
                                 <div>
                                     <label htmlFor="country">System Level</label>
-                                    <select id="country" className="form-select text-white-dark" name="country" defaultValue="United States">
-                                        <option value="All Countries">All Countries</option>
+                                    <select id="country" className="form-select text-white-dark" name="country" defaultValue="Admin">
+                                        <option value="All Countries">Admin</option>
                                         <option value="United States">United States</option>
                                         <option value="India">India</option>
                                         <option value="Japan">Japan</option>
@@ -118,8 +120,8 @@ export default function ComponentStaffDetails() {
                                 </div>
                                 <div>
                                     <label htmlFor="country">System Access</label>
-                                    <select id="country" className="form-select text-white-dark" name="country" defaultValue="United States">
-                                        <option value="All Countries">All Countries</option>
+                                    <select id="country" className="form-select text-white-dark" name="country" defaultValue="ALL">
+                                        <option value="All Countries">All</option>
                                         <option value="United States">United States</option>
                                         <option value="India">India</option>
                                         <option value="Japan">Japan</option>
@@ -131,11 +133,12 @@ export default function ComponentStaffDetails() {
                                 </div>
                                 <div>
                                     <label htmlFor="phone">Phone</label>
-                                    <input id="phone" type="text" placeholder="+1 (530) 555-12121" className="form-input" />
+                                    <input id="phone" type="text" placeholder="+60 (162) 531-588" className="form-input" />
                                 </div>
                                 <div>
                                     <label htmlFor="profession">Start Date</label>
-                                    <input id="profession" type="text" placeholder="Web Developer" className="form-input" />
+                                    {/* <input id="profession" type="text" placeholder="Web Developer" className="form-input" /> */}
+                                    <DatePicker value={date} onChange={setDate} />
                                 </div>
                                 <div>
                                     <label htmlFor="email">Email</label>
