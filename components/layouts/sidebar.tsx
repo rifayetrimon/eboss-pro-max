@@ -139,13 +139,13 @@ const Sidebar = () => {
 
                             <h2 className="-mx-4 mb-1 flex items-center bg-white-light/30 px-7 py-3 font-extrabold uppercase dark:bg-dark dark:bg-opacity-[0.08]">
                                 <IconMinus className="hidden h-5 w-4 flex-none" />
-                                <span>{t('modules')}</span>
+                                <span>{t('HR')}</span>
                             </h2>
 
                             <li className="nav-item">
                                 <ul>
                                     <li className="nav-item">
-                                        <Link href="/staff" className="group">
+                                        <Link href="/staff/staff-list" className="group">
                                             <div className="flex items-center">
                                                 <IconMenuChat className="shrink-0 group-hover:!text-primary" />
                                                 <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">{t('staff')}</span>
@@ -153,7 +153,7 @@ const Sidebar = () => {
                                         </Link>
                                     </li>
                                     <li className="nav-item">
-                                        <Link href="/staff_two" className="group">
+                                        <Link href="/staff/staff_two" className="group">
                                             <div className="flex items-center">
                                                 <IconMenuMailbox className="shrink-0 group-hover:!text-primary" />
                                                 <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">{t('staff 2')}</span>
@@ -194,30 +194,36 @@ const Sidebar = () => {
                                     </li>
 
                                     <li className="menu nav-item">
-                                        <button type="button" className={`${currentMenu === 'invoice' ? 'active' : ''} nav-link group w-full`} onClick={() => toggleMenu('invoice')}>
+                                        <button type="button" className={`${currentMenu === 'staff' ? 'active' : ''} nav-link group w-full`} onClick={() => toggleMenu('staff')}>
                                             <div className="flex items-center">
                                                 <IconMenuInvoice className="shrink-0 group-hover:!text-primary" />
-                                                <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">{t('invoice')}</span>
+                                                <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">{t('staff')}</span>
                                             </div>
 
-                                            <div className={currentMenu !== 'invoice' ? '-rotate-90 rtl:rotate-90' : ''}>
+                                            <div className={currentMenu !== 'staff' ? '-rotate-90 rtl:rotate-90' : ''}>
                                                 <IconCaretDown />
                                             </div>
                                         </button>
 
-                                        <AnimateHeight duration={300} height={currentMenu === 'invoice' ? 'auto' : 0}>
+                                        <AnimateHeight duration={300} height={currentMenu === 'staff' ? 'auto' : 0}>
                                             <ul className="sub-menu text-gray-500">
                                                 <li>
                                                     <Link href="/apps/invoice/list">{t('list')}</Link>
                                                 </li>
                                                 <li>
-                                                    <Link href="/apps/invoice/preview">{t('preview')}</Link>
+                                                    <Link href="/apps/invoice/preview">{t('training')}</Link>
                                                 </li>
                                                 <li>
-                                                    <Link href="/apps/invoice/add">{t('add')}</Link>
+                                                    <Link href="/apps/invoice/add">{t('vaccine')}</Link>
                                                 </li>
                                                 <li>
-                                                    <Link href="/apps/invoice/edit">{t('edit')}</Link>
+                                                    <Link href="/apps/invoice/edit">{t('award')}</Link>
+                                                </li>
+                                                <li>
+                                                    <Link href="/apps/invoice/edit">{t('attendance')}</Link>
+                                                </li>
+                                                <li>
+                                                    <Link href="/apps/invoice/edit">{t('access key')}</Link>
                                                 </li>
                                             </ul>
                                         </AnimateHeight>

@@ -641,7 +641,8 @@ export default function StaffTableTwo() {
                                         <img src={s.avatar || '/placeholder.svg'} className="h-8 w-8 sm:h-10 sm:w-10 rounded-full object-cover mr-2 sm:mr-3 flex-shrink-0" alt={s.name} />
                                         <div className="min-w-0">
                                             <div className="font-medium text-sm sm:text-base truncate">{s.name}</div>
-                                            <div className="text-xs sm:text-sm text-gray-500 truncate">{s.staffId}</div>
+
+                                            <div className="text-xs text-gray-500 truncate">{s.staffId}</div>
 
                                             {/* Status only shown in mobile under User */}
                                             <div className="text-xs mt-1 sm:hidden">

@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux';
 import type { IRootState } from '@/store';
 import IconExcel from '@/components/icon/icon-excel';
 import Tippy from '@tippyjs/react';
+import { useRouter } from 'next/navigation';
 
 type Staff = {
     id: number;
@@ -256,7 +257,9 @@ export default function StaffTable() {
     const [sortKey, setSortKey] = useState<keyof Staff>('name');
     const [sortDir, setSortDir] = useState<'asc' | 'desc'>('asc');
     const [showMore, setShowMore] = useState(false);
+    const [selectedStaff, setSelectedStaff] = useState<Staff | null>(null);
     const isRtl = useSelector((state: IRootState) => state.themeConfig.rtlClass) === 'rtl';
+    const router = useRouter();
 
     useEffect(() => {
         const filtered = staffData.filter(
@@ -323,9 +326,18 @@ export default function StaffTable() {
         winPrint.print();
     };
 
+    const handleRowClick = (staff: Staff) => {
+        // Save selected staff in sessionStorage
+        sessionStorage.setItem('selectedStaff', JSON.stringify(staff));
+
+        // Navigate without ID in URL
+        router.push('/staff/staff-details');
+    };
+
     return (
         <div className="panel mt-6">
             {/* Header */}
+
             <div className="mb-5 flex flex-col gap-4 lg:flex-row lg:items-center">
                 <div className="flex flex-col sm:flex-row gap-3 flex-wrap">
                     <input type="text" className="form-input w-full sm:w-[300px] max-w-full" placeholder="Search..." value={search} onChange={(e) => setSearch(e.target.value)} />
@@ -634,18 +646,19 @@ export default function StaffTable() {
 
                     <tbody>
                         {records.map((s) => (
-                            <tr key={s.id} className="border-b hover:bg-gray-50 dark:hover:bg-gray-700">
-                                {/* User column with status on mobile */}
+                            <tr
+                                key={s.id}
+                                onClick={() => handleRowClick(s)} // 👈 Navigate to details page
+                                className="border-b hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer"
+                            >
+                                {/* User column */}
                                 <td className="px-2 sm:px-4 py-3 align-top">
                                     <div className="flex items-center">
                                         <img src={s.avatar || '/placeholder.svg'} className="h-8 w-8 sm:h-10 sm:w-10 rounded-full object-cover mr-2 sm:mr-3 flex-shrink-0" alt={s.name} />
                                         <div className="min-w-0">
                                             <div className="font-medium text-sm sm:text-base truncate">{s.name}</div>
-
                                             <div className="flex gap-2 items-center">
                                                 <div className="text-xs sm:text-sm text-gray-500 truncate">{s.staffId}</div>
-
-                                                {/* Status only shown in mobile under User */}
                                                 <div className="text-xs mt-1 sm:hidden">
                                                     <span className={`px-2 py-0.5 rounded-full text-[10px] ${s.status === 'active' ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'}`}>
                                                         {s.status}
@@ -656,39 +669,27 @@ export default function StaffTable() {
                                     </div>
                                 </td>
 
-                                {/* Contact (mobile) */}
-                                <td className="px-2 sm:px-4 py-3 sm:hidden">
-                                    <div className="text-xs truncate">{s.email}</div>
-                                    <div className="text-xs text-gray-500 truncate">{s.phone}</div>
-                                </td>
-
-                                {/* Email (desktop) */}
+                                {/* Email */}
                                 <td className="px-2 sm:px-4 py-3 hidden sm:table-cell">
                                     <div className="truncate">{s.email}</div>
                                 </td>
 
-                                {/* Phone (desktop) */}
+                                {/* Phone */}
                                 <td className="px-2 sm:px-4 py-3 hidden sm:table-cell">
                                     <div className="text-sm truncate">{s.phone}</div>
                                 </td>
 
-                                {/* Department (mobile combines position + division) */}
-                                <td className="px-2 sm:px-4 py-3 sm:hidden">
-                                    <div className="text-xs truncate">{s.position}</div>
-                                    <div className="text-xs text-gray-500 truncate">{s.division}</div>
-                                </td>
-
-                                {/* Position (desktop) */}
+                                {/* Position */}
                                 <td className="px-2 sm:px-4 py-3 hidden sm:table-cell">
                                     <div className="text-sm truncate">{s.position}</div>
                                 </td>
 
-                                {/* Division (desktop only) */}
+                                {/* Division */}
                                 <td className="px-2 sm:px-4 py-3 hidden md:table-cell">
                                     <div className="truncate">{s.division}</div>
                                 </td>
 
-                                {/* Status (desktop only) */}
+                                {/* Status */}
                                 <td className="px-2 sm:px-4 py-3 hidden sm:table-cell">
                                     <span className={`px-2 py-1 text-xs rounded-full whitespace-nowrap ${s.status === 'active' ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'}`}>
                                         {s.status}
