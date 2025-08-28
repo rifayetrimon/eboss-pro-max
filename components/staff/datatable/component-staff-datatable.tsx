@@ -12,6 +12,7 @@ import type { IRootState } from '@/store';
 import IconExcel from '@/components/icon/icon-excel';
 import Tippy from '@tippyjs/react';
 import { useRouter } from 'next/navigation';
+import IconSettings from '@/components/icon/icon-settings';
 
 type Staff = {
     id: number;
@@ -490,6 +491,11 @@ export default function StaffTable() {
                                 </Dropdown>
                             </div>
                         </Tippy>
+                        <Tippy content="Settings" theme="white-light">
+                            <button className="block rounded-full bg-white-light/40 p-2 hover:bg-white-light/90 hover:text-primary dark:bg-dark/40 dark:hover:bg-dark/60">
+                                <IconSettings className="w-4 h-4" />
+                            </button>
+                        </Tippy>
                     </div>
                 </div>
             </div>
@@ -606,7 +612,8 @@ export default function StaffTable() {
                 </div>
             </div>
 
-            <div className="overflow-x-auto">
+            {/* Desktop / Tablet Table */}
+            <div className="overflow-x-auto hidden sm:block">
                 <table className="w-full border-collapse min-w-[800px]">
                     <thead>
                         <tr className="bg-gray-100 dark:bg-gray-800">
@@ -615,30 +622,24 @@ export default function StaffTable() {
                                 User
                             </th>
 
-                            {/* Contact column (Email + H/P combined on mobile, split on desktop) */}
-                            <th className="px-2 sm:px-4 py-2 cursor-pointer w-[25%] sm:hidden" onClick={() => toggleSort('email')}>
-                                Contact
-                            </th>
-                            <th className="px-2 sm:px-4 py-2 cursor-pointer w-[25%] hidden sm:table-cell" onClick={() => toggleSort('email')}>
+                            {/* Contact */}
+                            <th className="px-2 sm:px-4 py-2 cursor-pointer w-[25%]" onClick={() => toggleSort('email')}>
                                 Email
                             </th>
-                            <th className="px-2 sm:px-4 py-2 cursor-pointer w-[20%] hidden sm:table-cell" onClick={() => toggleSort('phone')}>
+                            <th className="px-2 sm:px-4 py-2 cursor-pointer w-[20%]" onClick={() => toggleSort('phone')}>
                                 H/P
                             </th>
 
-                            {/* Department (Position + Division on mobile) */}
-                            <th className="px-2 sm:px-4 py-2 cursor-pointer w-[20%] sm:hidden" onClick={() => toggleSort('position')}>
-                                Department
-                            </th>
-                            <th className="px-2 sm:px-4 py-2 cursor-pointer w-[12%] hidden sm:table-cell" onClick={() => toggleSort('position')}>
+                            {/* Department */}
+                            <th className="px-2 sm:px-4 py-2 cursor-pointer w-[12%]" onClick={() => toggleSort('position')}>
                                 Position
                             </th>
-                            <th className="px-2 sm:px-4 py-2 cursor-pointer w-[13%] hidden md:table-cell" onClick={() => toggleSort('division')}>
+                            <th className="px-2 sm:px-4 py-2 cursor-pointer w-[13%]" onClick={() => toggleSort('division')}>
                                 Division
                             </th>
 
-                            {/* Status (hidden on mobile, since it’s inside User column there) */}
-                            <th className="px-2 sm:px-4 py-2 cursor-pointer w-[10%] hidden sm:table-cell" onClick={() => toggleSort('status')}>
+                            {/* Status */}
+                            <th className="px-2 sm:px-4 py-2 cursor-pointer w-[10%]" onClick={() => toggleSort('status')}>
                                 Status
                             </th>
                         </tr>
@@ -646,59 +647,84 @@ export default function StaffTable() {
 
                     <tbody>
                         {records.map((s) => (
-                            <tr
-                                key={s.id}
-                                onClick={() => handleRowClick(s)} // 👈 Navigate to details page
-                                className="border-b hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer"
-                            >
-                                {/* User column */}
+                            <tr key={s.id} onClick={() => handleRowClick(s)} className="border-b hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer">
+                                {/* User */}
                                 <td className="px-2 sm:px-4 py-3 align-top">
                                     <div className="flex items-center">
-                                        <img src={s.avatar || '/placeholder.svg'} className="h-8 w-8 sm:h-10 sm:w-10 rounded-full object-cover mr-2 sm:mr-3 flex-shrink-0" alt={s.name} />
-                                        <div className="min-w-0">
+                                        <img src={s.avatar || '/placeholder.svg'} className="h-8 w-8 sm:h-10 sm:w-10 rounded-full object-cover mr-3" alt={s.name} />
+                                        <div>
                                             <div className="font-medium text-sm sm:text-base truncate">{s.name}</div>
-                                            <div className="flex gap-2 items-center">
-                                                <div className="text-xs sm:text-sm text-gray-500 truncate">{s.staffId}</div>
-                                                <div className="text-xs mt-1 sm:hidden">
-                                                    <span className={`px-2 py-0.5 rounded-full text-[10px] ${s.status === 'active' ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'}`}>
-                                                        {s.status}
-                                                    </span>
-                                                </div>
-                                            </div>
+                                            <div className="text-xs text-gray-500">{s.staffId}</div>
                                         </div>
                                     </div>
                                 </td>
 
                                 {/* Email */}
-                                <td className="px-2 sm:px-4 py-3 hidden sm:table-cell">
+                                <td className="px-2 sm:px-4 py-3">
                                     <div className="truncate">{s.email}</div>
                                 </td>
 
                                 {/* Phone */}
-                                <td className="px-2 sm:px-4 py-3 hidden sm:table-cell">
-                                    <div className="text-sm truncate">{s.phone}</div>
+                                <td className="px-2 sm:px-4 py-3">
+                                    <div className="text-sm">{s.phone}</div>
                                 </td>
 
                                 {/* Position */}
-                                <td className="px-2 sm:px-4 py-3 hidden sm:table-cell">
-                                    <div className="text-sm truncate">{s.position}</div>
+                                <td className="px-2 sm:px-4 py-3">
+                                    <div className="text-sm">{s.position}</div>
                                 </td>
 
                                 {/* Division */}
-                                <td className="px-2 sm:px-4 py-3 hidden md:table-cell">
-                                    <div className="truncate">{s.division}</div>
+                                <td className="px-2 sm:px-4 py-3">
+                                    <div>{s.division}</div>
                                 </td>
 
                                 {/* Status */}
-                                <td className="px-2 sm:px-4 py-3 hidden sm:table-cell">
-                                    <span className={`px-2 py-1 text-xs rounded-full whitespace-nowrap ${s.status === 'active' ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'}`}>
-                                        {s.status}
-                                    </span>
+                                <td className="px-2 sm:px-4 py-3">
+                                    <span className={`px-2 py-1 text-xs rounded-full ${s.status === 'active' ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'}`}>{s.status}</span>
                                 </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
+            </div>
+
+            {/* Mobile View (Stacked Cards) */}
+            <div className="sm:hidden space-y-4 mt-4">
+                {records.map((s) => (
+                    <div key={s.id} onClick={() => handleRowClick(s)} className="border rounded-lg p-4 shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer">
+                        {/* User Info */}
+                        <div className="flex items-center mb-3">
+                            <img src={s.avatar || '/placeholder.svg'} className="h-10 w-10 rounded-full object-cover mr-3" alt={s.name} />
+                            <div>
+                                <div className="font-medium text-base">{s.name}</div>
+                                <div className="text-[12px] text-gray-500">{s.staffId}</div>
+                            </div>
+                            <span className={`ml-auto px-2 py-0.5 rounded-full text-xs ${s.status === 'active' ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'}`}>{s.status}</span>
+                        </div>
+
+                        {/* Contact */}
+                        <div className="text-sm mb-2">
+                            <div className="font-semibold">Contacts:</div>
+                            <div className="truncate">{s.email}</div>
+                            <div>{s.phone}</div>
+                        </div>
+
+                        {/* <div className="text-sm mb-2">
+                            <div className="font-semibold">Position: {s.position}</div>
+                        </div>
+                        <div className="text-sm">
+                            <div className="font-semibold">Division: {s.division}</div>
+                        </div> */}
+                        {/* Department */}
+                        <div className="text-sm mb-2">
+                            <div className="font-semibold">Department:</div>
+                            <div className="flex gap-1">
+                                <div className="truncate">{s.division}</div>-<div>{s.position}</div>
+                            </div>
+                        </div>
+                    </div>
+                ))}
             </div>
 
             <div className="flex flex-col lg:flex-row justify-between items-center gap-4 mt-4">

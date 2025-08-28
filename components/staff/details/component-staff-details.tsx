@@ -96,15 +96,11 @@ export default function ComponentStaffDetails() {
                             </div>
                             <div className="grid flex-1 grid-cols-1 gap-5 sm:grid-cols-2">
                                 <div>
-                                    <label htmlFor="name">Full Name</label>
+                                    <label htmlFor="name">Name</label>
                                     <input id="name" type="text" placeholder="Jimmy Turner" className="form-input" />
                                 </div>
                                 <div>
-                                    <label htmlFor="profession">Profession</label>
-                                    <input id="profession" type="text" placeholder="Web Developer" className="form-input" />
-                                </div>
-                                <div>
-                                    <label htmlFor="country">Country</label>
+                                    <label htmlFor="country">System Level</label>
                                     <select id="country" className="form-select text-white-dark" name="country" defaultValue="United States">
                                         <option value="All Countries">All Countries</option>
                                         <option value="United States">United States</option>
@@ -117,23 +113,36 @@ export default function ComponentStaffDetails() {
                                     </select>
                                 </div>
                                 <div>
-                                    <label htmlFor="address">Address</label>
+                                    <label htmlFor="address">Ic Number</label>
                                     <input id="address" type="text" placeholder="New York" className="form-input" />
                                 </div>
                                 <div>
-                                    <label htmlFor="location">Location</label>
-                                    <input id="location" type="text" placeholder="Location" className="form-input" />
+                                    <label htmlFor="country">System Access</label>
+                                    <select id="country" className="form-select text-white-dark" name="country" defaultValue="United States">
+                                        <option value="All Countries">All Countries</option>
+                                        <option value="United States">United States</option>
+                                        <option value="India">India</option>
+                                        <option value="Japan">Japan</option>
+                                        <option value="China">China</option>
+                                        <option value="Brazil">Brazil</option>
+                                        <option value="Norway">Norway</option>
+                                        <option value="Canada">Canada</option>
+                                    </select>
                                 </div>
                                 <div>
                                     <label htmlFor="phone">Phone</label>
                                     <input id="phone" type="text" placeholder="+1 (530) 555-12121" className="form-input" />
                                 </div>
                                 <div>
+                                    <label htmlFor="profession">Start Date</label>
+                                    <input id="profession" type="text" placeholder="Web Developer" className="form-input" />
+                                </div>
+                                <div>
                                     <label htmlFor="email">Email</label>
                                     <input id="email" type="email" placeholder="Jimmy@gmail.com" className="form-input" />
                                 </div>
                                 <div>
-                                    <label htmlFor="web">Website</label>
+                                    <label htmlFor="web">Status</label>
                                     <input id="web" type="text" placeholder="Enter URL" className="form-input" />
                                 </div>
                                 <div>
