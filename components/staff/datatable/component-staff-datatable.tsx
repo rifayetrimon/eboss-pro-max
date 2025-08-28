@@ -653,7 +653,13 @@ export default function StaffTable() {
                                 {/* User */}
                                 <td className="px-2 sm:px-4 py-3 align-top">
                                     <div className="flex items-center">
-                                        <Image src={s.avatar || '/placeholder.svg'} width={40} height={40} alt={s.name || 'Staff Avatar'} className="rounded-full object-cover mr-3" />
+                                        <Image
+                                            src={s.avatar ? `${basePath}${s.avatar}` : `${basePath}/placeholder.svg`}
+                                            width={40}
+                                            height={40}
+                                            alt={s.name || 'Staff Avatar'}
+                                            className="rounded-full object-cover mr-3"
+                                        />
 
                                         <div>
                                             <div className="font-medium text-sm sm:text-base truncate">{s.name}</div>
