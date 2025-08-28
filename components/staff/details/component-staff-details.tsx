@@ -357,58 +357,88 @@ export default function ComponentStaffDetails() {
                             <div className="grid flex-1 grid-cols-1 gap-5 sm:grid-cols-2">
                                 <div>
                                     <label htmlFor="country">Qualification</label>
-                                    <select id="country" className="form-select text-white-dark" name="country" defaultValue="Qualification">
-                                        <option value="All Countries">Qualification</option>
+                                    <select id="country" className="form-select text-white-dark" name="country" defaultValue="Select">
+                                        <option value="Select" disabled>
+                                            Select
+                                        </option>
                                         <option value="United States">PHD</option>
                                         <option value="India">Bachelor</option>
                                         <option value="India">Masters</option>
                                     </select>
                                 </div>
                                 <div>
-                                    <label htmlFor="country">Religion</label>
-                                    <select id="country" className="form-select text-white-dark" name="country" defaultValue="Islam">
-                                        <option value="All Countries">Islam</option>
-                                        <option value="United States">United States</option>
-                                        <option value="India">India</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label htmlFor="country">Gender</label>
+                                    <label htmlFor="country">Occupation</label>
                                     <select id="country" className="form-select text-white-dark" name="country" defaultValue="Select">
                                         <option value="Select" disabled>
                                             Select
                                         </option>
-                                        <option value="All Countries">Male</option>
-                                        <option value="United States">Female</option>
+                                        <option value="United States">Guru Besar</option>
+                                        <option value="India">Ketua Unit SPBT</option>
+                                        <option value="India">Masters</option>
                                     </select>
                                 </div>
                                 <div>
-                                    <label htmlFor="country">Nationality</label>
+                                    <label htmlFor="country">Division</label>
                                     <select id="country" className="form-select text-white-dark" name="country" defaultValue="Select">
                                         <option value="Select" disabled>
                                             Select
                                         </option>
-                                        <option value="All Countries">Malaysia</option>
-                                        <option value="United States">China</option>
+                                        <option value="All Countries">Support</option>
+                                        <option value="United States">Academic</option>
                                     </select>
                                 </div>
                                 <div>
-                                    <label htmlFor="country">Birth Place</label>
+                                    <label htmlFor="country">Status</label>
                                     <select id="country" className="form-select text-white-dark" name="country" defaultValue="Select">
                                         <option value="Select" disabled>
                                             Select
                                         </option>
-                                        <option value="All Countries">Selangor</option>
-                                        <option value="United States">Johor</option>
-                                        <option value="United States">Kedah</option>
+                                        <option value="All Countries">Tetap</option>
+                                        <option value="United States">Kontrak</option>
+                                        <option value="United States">Sandaran</option>
                                     </select>
                                 </div>
                                 <div>
-                                    <label htmlFor="number">Tel. Home</label>
-                                    <input id="number" type="text" placeholder="+60 (162) 531-588" className="form-input" />
+                                    <label htmlFor="country">Grade</label>
+                                    <select id="country" className="form-select text-white-dark" name="country" defaultValue="Select">
+                                        <option value="Select" disabled>
+                                            Select
+                                        </option>
+                                        <option value="All Countries">A</option>
+                                        <option value="United States">B</option>
+                                        <option value="United States">C</option>
+                                    </select>
                                 </div>
                                 <div>
-                                    <label htmlFor="profession">Birth Date</label>
+                                    <label htmlFor="country">Branch</label>
+                                    <select id="country" className="form-select text-white-dark" name="country" defaultValue="Select">
+                                        <option value="Select" disabled>
+                                            Select
+                                        </option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label htmlFor="profession">Confirm Date</label>
+                                    <DatePicker value={date} onChange={setDate} />
+                                </div>
+                                <div>
+                                    <label htmlFor="profession">End Date</label>
+                                    <DatePicker value={date} onChange={setDate} />
+                                </div>
+                                <div>
+                                    <label htmlFor="profession">Visa Expiry</label>
+                                    <DatePicker value={date} onChange={setDate} />
+                                </div>
+                                <div>
+                                    <label htmlFor="profession">Permit Expiry</label>
+                                    <DatePicker value={date} onChange={setDate} />
+                                </div>
+                                <div>
+                                    <label htmlFor="profession">Contract Expiry</label>
+                                    <DatePicker value={date} onChange={setDate} />
+                                </div>
+                                <div>
+                                    <label htmlFor="profession">Passport Expiry</label>
                                     <DatePicker value={date} onChange={setDate} />
                                 </div>
                             </div>
@@ -418,28 +448,84 @@ export default function ComponentStaffDetails() {
             ) : (
                 ''
             )}
-            {tabs === 'danger-zone' ? (
-                <div className="switch">
-                    <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
-                        <div className="panel space-y-5">
-                            <h5 className="mb-4 text-lg font-semibold">Purge Cache</h5>
-                            <p>Remove the active resource from the cache without waiting for the predetermined cache expiry time.</p>
-                            <button className="btn btn-secondary">Clear</button>
+            {tabs === 'academic' ? (
+                <div>
+                    <form className="mb-5 rounded-md border border-[#ebedf2] bg-white p-4 dark:border-[#191e3a] dark:bg-black">
+                        <h6 className="mb-5 text-lg font-bold">Permanent Address</h6>
+                        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                            {/* ✅ Address spans 2 columns */}
+                            <div className="sm:col-span-2">
+                                <label htmlFor="ctnTextarea">Address</label>
+                                <textarea id="ctnTextarea" rows={3} className="form-textarea w-full" placeholder="Enter Address" required></textarea>
+                            </div>
+
+                            {/* ✅ State */}
+                            <div>
+                                <label htmlFor="state">State</label>
+                                <select id="state" className="form-select text-white-dark" name="state" defaultValue="Select">
+                                    <option value="Select" disabled>
+                                        Select
+                                    </option>
+                                    <option value="Selangor">Selangor</option>
+                                    <option value="Johor">Johor</option>
+                                    <option value="Kedah">Kedah</option>
+                                </select>
+                            </div>
+
+                            {/* ✅ Country */}
+                            <div>
+                                <label htmlFor="country">Country</label>
+                                <select id="country" className="form-select text-white-dark" name="country" defaultValue="Select">
+                                    <option value="Select" disabled>
+                                        Select
+                                    </option>
+                                    <option value="United States">United States</option>
+                                    <option value="Malaysia">Malaysia</option>
+                                </select>
+                            </div>
                         </div>
-                        <div className="panel space-y-5">
-                            <h5 className="mb-4 text-lg font-semibold">Deactivate Account</h5>
-                            <p>You will not be able to receive messages, notifications for up to 24 hours.</p>
-                            <label className="relative h-6 w-12">
-                                <input type="checkbox" className="custom_switch peer absolute z-10 h-full w-full cursor-pointer opacity-0" id="custom_switch_checkbox7" />
-                                <span className="block h-full rounded-full bg-[#ebedf2] before:absolute before:bottom-1 before:left-1 before:h-4 before:w-4 before:rounded-full before:bg-white before:transition-all before:duration-300 peer-checked:bg-primary peer-checked:before:left-7 dark:bg-dark dark:before:bg-white-dark dark:peer-checked:before:bg-white"></span>
+
+                        <div className="mt-10">
+                            <label className="inline-flex cursor-pointer">
+                                <input type="checkbox" className="form-checkbox" />
+                                <span className="relative text-white-dark checked:bg-none">Please Check If Mailing Address Same As Above</span>
                             </label>
                         </div>
-                        <div className="panel space-y-5">
-                            <h5 className="mb-4 text-lg font-semibold">Delete Account</h5>
-                            <p>Once you delete the account, there is no going back. Please be certain.</p>
-                            <button className="btn btn-danger btn-delete-account">Delete my account</button>
+
+                        <h6 className="mb-5 mt-10 text-lg font-bold">Present Address</h6>
+                        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                            {/* ✅ Address spans 2 columns */}
+                            <div className="sm:col-span-2">
+                                <label htmlFor="ctnTextarea">Address</label>
+                                <textarea id="ctnTextarea" rows={3} className="form-textarea w-full" placeholder="Enter Address" required></textarea>
+                            </div>
+
+                            {/* ✅ State */}
+                            <div>
+                                <label htmlFor="state">State</label>
+                                <select id="state" className="form-select text-white-dark" name="state" defaultValue="Select">
+                                    <option value="Select" disabled>
+                                        Select
+                                    </option>
+                                    <option value="Selangor">Selangor</option>
+                                    <option value="Johor">Johor</option>
+                                    <option value="Kedah">Kedah</option>
+                                </select>
+                            </div>
+
+                            {/* ✅ Country */}
+                            <div>
+                                <label htmlFor="country">Country</label>
+                                <select id="country" className="form-select text-white-dark" name="country" defaultValue="Select">
+                                    <option value="Select" disabled>
+                                        Select
+                                    </option>
+                                    <option value="United States">United States</option>
+                                    <option value="Malaysia">Malaysia</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             ) : (
                 ''
