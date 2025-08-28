@@ -13,6 +13,8 @@ import IconExcel from '@/components/icon/icon-excel';
 import Tippy from '@tippyjs/react';
 import { useRouter } from 'next/navigation';
 import IconSettings from '@/components/icon/icon-settings';
+import Image from 'next/image';
+import { basePath } from '@/lib/basePath';
 
 type Staff = {
     id: number;
@@ -651,7 +653,8 @@ export default function StaffTable() {
                                 {/* User */}
                                 <td className="px-2 sm:px-4 py-3 align-top">
                                     <div className="flex items-center">
-                                        <img src={s.avatar || '/placeholder.svg'} className="h-8 w-8 sm:h-10 sm:w-10 rounded-full object-cover mr-3" alt={s.name} />
+                                        <Image src={s.avatar || '/placeholder.svg'} width={40} height={40} alt={s.name || 'Staff Avatar'} className="rounded-full object-cover mr-3" />
+
                                         <div>
                                             <div className="font-medium text-sm sm:text-base truncate">{s.name}</div>
                                             <div className="text-xs text-gray-500">{s.staffId}</div>
@@ -695,7 +698,8 @@ export default function StaffTable() {
                     <div key={s.id} onClick={() => handleRowClick(s)} className="border rounded-lg p-4 shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer">
                         {/* User Info */}
                         <div className="flex items-center mb-3">
-                            <img src={s.avatar || '/placeholder.svg'} className="h-10 w-10 rounded-full object-cover mr-3" alt={s.name} />
+                            <Image src={s.avatar || '/placeholder.svg'} width={40} height={40} alt={s.name || 'Staff Avatar'} className="h-10 w-10 rounded-full object-cover mr-3" />
+
                             <div>
                                 <div className="font-medium text-base">{s.name}</div>
                                 <div className="text-[12px] text-gray-500">{s.staffId}</div>
@@ -710,12 +714,6 @@ export default function StaffTable() {
                             <div>{s.phone}</div>
                         </div>
 
-                        {/* <div className="text-sm mb-2">
-                            <div className="font-semibold">Position: {s.position}</div>
-                        </div>
-                        <div className="text-sm">
-                            <div className="font-semibold">Division: {s.division}</div>
-                        </div> */}
                         {/* Department */}
                         <div className="text-sm mb-2">
                             <div className="font-semibold">Department:</div>
