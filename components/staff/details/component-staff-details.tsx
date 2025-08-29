@@ -10,6 +10,7 @@ import IconUser from '@/components/icon/icon-user';
 import DatePicker from '@/components/ui/date-picker';
 import { staffFormConfig, type SectionConfig, type FieldConfig } from '@/lib/staffFormConfig';
 import Image from 'next/image';
+import { basePath } from '@/lib/basePath';
 
 type Experience = {
     position: string;
@@ -173,7 +174,7 @@ export default function ComponentStaffDetails() {
                         <div className="flex flex-col sm:flex-row sm:items-start sm:space-x-6">
                             {/* Profile Image */}
                             <div className="w-full sm:w-2/12 flex justify-center sm:justify-start">
-                                <Image src="/assets/images/profile-34.jpeg" alt="img" width={80} height={80} className="h-20 w-20 rounded-full object-cover md:h-32 md:w-32" />
+                                <Image src={`${basePath}/assets/images/profile-34.jpeg`} alt="img" width={80} height={80} className="h-20 w-20 rounded-full object-cover md:h-32 md:w-32" />
                             </div>
 
                             {/* Form Grid */}
