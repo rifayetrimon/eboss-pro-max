@@ -12,7 +12,6 @@ import type { IRootState } from '@/store';
 import IconExcel from '@/components/icon/icon-excel';
 import Tippy from '@tippyjs/react';
 import { useRouter } from 'next/navigation';
-import IconSettings from '@/components/icon/icon-settings';
 import Image from 'next/image';
 import { basePath } from '@/lib/basePath';
 
@@ -492,11 +491,6 @@ export default function StaffTable() {
                                     </ul>
                                 </Dropdown>
                             </div>
-                        </Tippy>
-                        <Tippy content="Settings" theme="white-light">
-                            <button className="block rounded-full bg-white-light/40 p-2 hover:bg-white-light/90 hover:text-primary dark:bg-dark/40 dark:hover:bg-dark/60">
-                                <IconSettings className="w-4 h-4" />
-                            </button>
                         </Tippy>
                     </div>
                 </div>

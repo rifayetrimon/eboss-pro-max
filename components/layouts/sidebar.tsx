@@ -242,7 +242,7 @@ const Sidebar = () => {
 
                             <h2 className="-mx-4 mb-1 flex items-center bg-white-light/30 px-7 py-3 font-extrabold uppercase dark:bg-dark dark:bg-opacity-[0.08]">
                                 <IconMinus className="hidden h-5 w-4 flex-none" />
-                                <span>{t('user_interface')}</span>
+                                <span>{t('Settings')}</span>
                             </h2>
 
                             <li className="menu nav-item">
@@ -378,10 +378,10 @@ const Sidebar = () => {
                             </li>
 
                             <li className="menu nav-item">
-                                <Link href="/charts" className="group">
+                                <Link href="/settings/staff" className="group">
                                     <div className="flex items-center">
                                         <IconMenuCharts className="shrink-0 group-hover:!text-primary" />
-                                        <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">{t('charts')}</span>
+                                        <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">{t('Staff')}</span>
                                     </div>
                                 </Link>
                             </li>
