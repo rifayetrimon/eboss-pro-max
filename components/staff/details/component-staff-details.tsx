@@ -20,6 +20,14 @@ type Experience = {
     endDate: Date | null;
 };
 
+type Child = {
+    name: string;
+    icNumber: string;
+    maritalStatus: string;
+    occupation: string;
+    birthDate: Date | null;
+};
+
 export default function ComponentStaffDetails() {
     const [tabs, setTabs] = useState<string>('system-information');
     const [date, setDate] = useState<Date[] | null>(null);
@@ -32,6 +40,8 @@ export default function ComponentStaffDetails() {
         setExperiences([...experiences, { position: '', grade: '', division: '', employer: '', startDate: null, endDate: null }]);
     };
 
+    const [children, setChildren] = useState<Child[]>([{ name: '', icNumber: '', maritalStatus: '', occupation: '', birthDate: null }]);
+
     // ✅ properly typed handleChange
     const handleChange = <K extends keyof Experience>(index: number, field: K, value: Experience[K]) => {
         const updated = [...experiences];
@@ -39,6 +49,16 @@ export default function ComponentStaffDetails() {
         setExperiences(updated);
     };
 
+    // ✅ properly typed children
+    const handleChildChange = (index: number, field: keyof Child, value: any) => {
+        const newChildren = [...children];
+        newChildren[index][field] = value;
+        setChildren(newChildren);
+    };
+
+    const addChild = () => {
+        setChildren([...children, { name: '', icNumber: '', maritalStatus: '', occupation: '', birthDate: null }]);
+    };
     return (
         <div className="pt-5">
             <div className="mb-5 flex items-center justify-between">
@@ -572,9 +592,126 @@ export default function ComponentStaffDetails() {
                     ))}
 
                     {/* Add More Button */}
-                    <button type="button" onClick={addExperience} className="rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700">
+                    <button type="button" onClick={addExperience} className="btn btn-primary w-full sm:w-auto">
                         + Add More
                     </button>
+                </div>
+            ) : (
+                ''
+            )}
+            {tabs === 'family-information' ? (
+                <div>
+                    <form className="mb-5 rounded-md border border-[#ebedf2] bg-white p-4 dark:border-[#191e3a] dark:bg-black">
+                        <h6 className="mb-5 text-lg font-bold">Family Information</h6>
+                        <div className="flex flex-col sm:flex-row">
+                            <div className="grid flex-1 grid-cols-1 gap-5 sm:grid-cols-2">
+                                <div>
+                                    <label htmlFor="name">Father&apos;s Name</label>
+                                    <input id="name" type="text" placeholder="Jimmy Turner" className="form-input" />
+                                </div>
+                                <div>
+                                    <label htmlFor="name">Mother&apos;s Name</label>
+                                    <input id="name" type="text" placeholder="Aysha Turner" className="form-input" />
+                                </div>
+                                <div>
+                                    <label htmlFor="phone">Phone</label>
+                                    <input id="phone" type="text" placeholder="+60 (162) 531-588" className="form-input" />
+                                </div>
+                                <div>
+                                    <label htmlFor="country">Marital status</label>
+                                    <select id="country" className="form-select text-white-dark" name="country" defaultValue="Select">
+                                        <option value="Select" disabled>
+                                            Select
+                                        </option>
+                                        <option value="United States">Married</option>
+                                        <option value="India">Unmarried</option>
+                                        <option value="India">Divorced</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label htmlFor="name_spouse">Name(Spouse)</label>
+                                    <input id="name_spouse" type="text" placeholder="Jane Doe" className="form-input" />
+                                </div>
+                                <div>
+                                    <label htmlFor="ic_spouse">IC Number(Spouse)</label>
+                                    <input id="ic_spouse" type="text" placeholder="319349841" className="form-input" />
+                                </div>
+                                <div>
+                                    <label htmlFor="phone_spouse">Phone(Spouse)</label>
+                                    <input id="phone_spouse" type="text" placeholder="+60 (162) 531-588" className="form-input" />
+                                </div>
+                                <div>
+                                    <label htmlFor="occupation_spouse">Occupation(Spouse)</label>
+                                    <input id="occupation_spouse" type="text" placeholder="Software Engineer" className="form-input" />
+                                </div>
+                            </div>
+                        </div>
+                        <h6 className="mb-5 mt-6 text-lg font-bold">Children Information</h6>
+
+                        {children.map((child, index) => (
+                            <div key={index} className="mb-5 rounded-md border border-[#ebedf2] bg-white p-4 dark:border-[#191e3a] dark:bg-black">
+                                <h6 className="mb-4 text-md font-semibold">Child {index + 1}</h6>
+                                <div className="grid flex-1 grid-cols-1 gap-5 sm:grid-cols-2">
+                                    <div>
+                                        <label htmlFor={`name_child_${index}`}>Child Name</label>
+                                        <input
+                                            id={`name_child_${index}`}
+                                            type="text"
+                                            placeholder="Jane Doe"
+                                            className="form-input"
+                                            value={child.name}
+                                            onChange={(e) => handleChildChange(index, 'name', e.target.value)}
+                                        />
+                                    </div>
+                                    <div>
+                                        <label htmlFor={`ic_child_${index}`}>IC Number (Child)</label>
+                                        <input
+                                            id={`ic_child_${index}`}
+                                            type="text"
+                                            placeholder="319349841"
+                                            className="form-input"
+                                            value={child.icNumber}
+                                            onChange={(e) => handleChildChange(index, 'icNumber', e.target.value)}
+                                        />
+                                    </div>
+                                    <div>
+                                        <label htmlFor={`status_child_${index}`}>Marital Status</label>
+                                        <select
+                                            id={`status_child_${index}`}
+                                            className="form-select text-white-dark"
+                                            value={child.maritalStatus}
+                                            onChange={(e) => handleChildChange(index, 'maritalStatus', e.target.value)}
+                                        >
+                                            <option value="">Select</option>
+                                            <option value="Married">Married</option>
+                                            <option value="Unmarried">Unmarried</option>
+                                            <option value="Divorced">Divorced</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label htmlFor={`occupation_child_${index}`}>School/College/Job</label>
+                                        <input
+                                            id={`occupation_child_${index}`}
+                                            type="text"
+                                            placeholder="Student / Engineer"
+                                            className="form-input"
+                                            value={child.occupation}
+                                            onChange={(e) => handleChildChange(index, 'occupation', e.target.value)}
+                                        />
+                                    </div>
+                                    <div>
+                                        <label htmlFor="profession">Birth Date</label>
+                                        <DatePicker value={date} onChange={setDate} />
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+
+                        {/* Add More Children Button */}
+                        <button type="button" onClick={addChild} className="btn btn-primary w-full sm:w-auto">
+                            + Add More Child
+                        </button>
+                    </form>
                 </div>
             ) : (
                 ''
