@@ -186,17 +186,14 @@ export default function StaffDetailsModal({ isOpen, onClose, selectedStaff }: St
                                         )}
                                     </div>
                                     <button onClick={onClose} type="button" className="text-white-dark hover:text-dark">
-                                        {/* <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <circle opacity="0.5" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.5" />
-                                            <path d="m14.5 9.50002-5 5m0-5 5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                                        </svg> */}
                                         <IconClose className="w-5 h-5" />
                                     </button>
                                 </div>
 
                                 <div className="flex-1 overflow-y-auto">
-                                    <div className="p-5">
-                                        <Tab.Group>
+                                    <Tab.Group>
+                                        {/* Fixed Tabs Container */}
+                                        <div className="sticky top-0 z-10 bg-white dark:bg-black px-5 pt-5">
                                             <Tab.List className="flex flex-wrap border-b border-white-light dark:border-[#191e3a] overflow-x-auto">
                                                 {enabledSections.map((section) => (
                                                     <Tab key={section.section} as={Fragment}>
@@ -220,7 +217,9 @@ export default function StaffDetailsModal({ isOpen, onClose, selectedStaff }: St
                                                     </Tab>
                                                 ))}
                                             </Tab.List>
+                                        </div>
 
+                                        <div className="p-5">
                                             <Tab.Panels className="mt-5">
                                                 {enabledSections.map((section) => (
                                                     <Tab.Panel key={section.section}>
@@ -486,8 +485,8 @@ export default function StaffDetailsModal({ isOpen, onClose, selectedStaff }: St
                                                     </Tab.Panel>
                                                 ))}
                                             </Tab.Panels>
-                                        </Tab.Group>
-                                    </div>
+                                        </div>
+                                    </Tab.Group>
                                 </div>
 
                                 <div className="flex justify-end items-center gap-4 px-5 py-3 border-t bg-[#fbfbfb] dark:bg-[#121c2c]">

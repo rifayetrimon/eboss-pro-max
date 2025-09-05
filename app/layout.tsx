@@ -7,8 +7,8 @@ import { MantineProvider } from '@mantine/core';
 
 export const metadata: Metadata = {
     title: {
-        template: '%s | VRISTO - Multipurpose Tailwind Dashboard Template',
-        default: 'VRISTO - Multipurpose Tailwind Dashboard Template',
+        template: '%s | Eboss Pro Max',
+        default: 'Eboss Pro Max',
     },
 };
 const nunito = Nunito({
