@@ -154,7 +154,7 @@ export default function StaffDetailsModal({ isOpen, onClose, selectedStaff }: St
                     <div className="fixed inset-0 bg-[black]/60 z-[999]" />
                 </TransitionChild>
                 <div className="fixed inset-0 z-[999] overflow-y-auto">
-                    <div className="flex items-start justify-center min-h-screen px-4 py-8">
+                    <div className="flex items-center justify-center min-h-screen px-4 py-8">
                         <TransitionChild
                             as={Fragment}
                             enter="ease-out duration-300"
@@ -164,7 +164,7 @@ export default function StaffDetailsModal({ isOpen, onClose, selectedStaff }: St
                             leaveFrom="opacity-100 scale-100"
                             leaveTo="opacity-0 scale-95"
                         >
-                            <DialogPanel className="panel border-0 p-0 rounded-lg overflow-hidden w-full max-w-6xl my-8 text-black dark:text-white-dark max-h-[90vh] flex flex-col">
+                            <DialogPanel className="panel border-0 p-0 rounded-lg overflow-hidden w-full max-w-6xl h-[80vh] text-black dark:text-white-dark flex flex-col">
                                 <div className="flex bg-[#fbfbfb] dark:bg-[#121c2c] items-center justify-between px-5 py-3 border-b">
                                     <div className="flex items-center gap-3">
                                         {selectedStaff && (
