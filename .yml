@@ -1,0 +1,8 @@
+services:
+    app:
+        image: eboss-pro-max:latest
+        deploy:
+            resources:
+                limits:
+                    cpus: '0.5'
+                    memory: 256M
